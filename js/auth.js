@@ -199,11 +199,9 @@ function passwordLogin(email, password) {
         })
             .then(response => {
                 if (response.status !== 200) {
-                    console.error("Failed")
                     return reject({'status': response.status});
                 }
                 response.json().then(response => {
-                    console.log(response);
                     saveUser(response.token);
                     return resolve({'loginState': loginState, 'accountType': loginAccType, 'accountOid': userUID});
                 })
@@ -213,4 +211,10 @@ function passwordLogin(email, password) {
             });
     });
 
+}
+
+window.gapi_onload = function () {
+    gapi.load('auth2', function () {
+        gapi.auth2.init();
+    });
 }

@@ -59,6 +59,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/lib/jwt-decode.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="js/auth.js"></script>
@@ -70,7 +71,11 @@
                 console.log('Image URL: ' + profile.getImageUrl());
                 console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
                 googleLogin(profile.getEmail(), googleUser.getAuthResponse().id_token).
-                then((data) => {location.href = "index.html";}).catch(() => alert("Failed"));
+                then((data) => {location.href = "index.html";}).catch(() => Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Account with that google credential isn\'t found. Maybe try signing up'
+                }));
             }
             (function () {
                 loadLoginData()
@@ -86,7 +91,13 @@
                 loginForm.submit(function (e) {
                     e.preventDefault();
                     passwordLogin(emailField.val(), passwordField.val()).
-                    then((data) => {location.href = "index.html";}).catch(() => alert("Failed"))
+                    then((data) => {
+                        location.href = "index.html";
+                    }).catch(() => Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Account with that credentials not found!'
+                    }))
                 })
             })()
         </script>
