@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <meta name="google-signin-client_id"
+        content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+
+        <style>
+            #glassM {
+                background: rgba( 255, 255, 255, 0.50 );
+                box-shadow: 0 4px 20px -7px rgba( 31, 38, 135, 0.37 );
+                backdrop-filter: blur( 7.0px );
+                -webkit-backdrop-filter: blur( 7.0px );
+                /* border-radius: 10px; */
+                border: 1px solid rgba( 255, 255, 255, 0.18 );
+            }
+        </style>
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
+        <div class="container">
+            <a class="navbar-brand text-purple-500 font-bold tracking-widest" href="#!">KantinVirtual</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img src="/assets/hamburger.svg" alt=""></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link" href="profile.html">Profile</a></li>
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link" href="signup.html">Sign Up</a></li>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Order List-->
+    <!-- Bootstrap core JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/lib/jwt-decode.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/order.js"></script>
+
+    <!-- Core theme JS-->
+    <script>
+        $(document).ready(function () {
+            loadLoginData()
+
+            if (getLoggedInStatus()) {
+                $('#signupbtn').hide();
+                $('#loginbtn').hide();
+            } else {
+                $('#logoutbtn').hide();
+                $('#profilebtn').hide();
+            }
+
+            $('#logoutbtn').on("click", function (e) {
+                logout();
+            })
+
+            const userData = localStorage.getItem("tokenData");
+            let userRole = "not logged in";
+            if (userData !== null){
+                userRole = userData.type;
+            }
+
+            if (userRole === "buyer"){
+                setOrderUserRole("buyer");
+                loadOrdersByBuyer(localStorage.getItem("token"))
+            } else if (userRole === "seller"){
+                setOrderUserRole("seller");
+                loadOrdersBySeller(localStorage.getItem("token"));
+            }
+        })
+        
+    </script>
+</body>
+</html>
