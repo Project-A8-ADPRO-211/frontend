@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <meta name="google-signin-client_id"
+        content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #glassM {
+            background: rgba(255, 255, 255, 0.50);
+            box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(7.0px);
+            -webkit-backdrop-filter: blur(7.0px);
+            /* border-radius: 10px; */
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
+        <div class="container">
+            <a class="navbar-brand text-purple-500 font-bold tracking-widest" href="#!">KantinVirtual</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                    src="/assets/hamburger.svg" alt=""></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link"
+                            href="profile.html">Profile</a></li>
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link" href="signup.html">Sign
+                            Up</a></li>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content using react-->
+    <div id="root"></div>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/lib/jwt-decode.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Core theme JS-->
+    <script>
+        (function () {
+            loadLoginData()
+
+            if (getLoggedInStatus()) {
+                $('#signupbtn').hide();
+                $('#loginbtn').hide();
+            } else {
+                $('#logoutbtn').hide();
+                $('#profilebtn').hide();
+            }
+
+            $('#logoutbtn').on("click", function (e) {
+                logout();
+            })
+
+        })()
+    </script>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        const { useState, useEffect } = React
+
+        const App = () => {
+            const [angka, setAngka] = useState(0)
+            const userData = localStorage.getItem("tokenData")
+            let userRole = "not logged in"
+            if (userData !== null) {
+                userRole = userData.type
+            }
+
+            const handleKeyDown = (event) => {
+                if (event.key === 'Enter') {
+                    setAngka(angka + 1)
+                }
+            }
+
+            return (
+                <div>
+                    <div className="container mx-auto mt-24">
+                        <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center md:items-start justify-between">
+                            <div className="flex flex-col items-center md:items-start">
+                                <h1 className="mb-2 text-3xl sm:text-4xl">Kumpulan Produk</h1>
+                                <div className="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
+                            </div>
+                            <div className="flex flex-row items-center justify-between space-x-3">
+                                <input className="focus:outline-none pl-3 md:pr-12 py-2 border-2 border-gray-300 focus:border-purple-500 focus:shadow-lg rounded-xl" type="text" placeholder="Find Product Here" onKeyDown={handleKeyDown} />
+                                <div className="flex items-center justify-center rounded-xl border-2 border-gray-300 hover:border-purple-500 cursor-pointer hover:shadow-lg" style={{ height: "44px", width: "44px" }}>
+                                    <img src="/assets/search.svg" alt="" />
+                                </div>
+
+                                {userRole === "not logged in" ? (
+                                    <div></div>
+                                ) : (
+                                    <div className="btn btn-primary mx-2">Tambah</div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap flex-col sm:flex-row items-center justify-center lg:justify-between gap-10 md:gap-16 xl:gap-20 2xl:gap-24 my-12 container mx-auto">
+                        <div
+                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
+                        >
+                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
+                                <img
+                                    src="/assets/nothing.svg"
+                                    alt="no picture"
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="m-4">
+                                    <h1 className="font-bold text-purple-500 truncate">
+                                        Keripik kentang
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Toko ibu sumenep
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Rp. 13.000
+                                    </h1>
+                                    <div className="absolute bottom-0 right-0 overflow-hidden rounded-br-lg">
+                                        <img src="/assets/product_decoration.svg" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
+                        >
+                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
+                                <img
+                                    src="/assets/keripik.jpeg"
+                                    alt="no picture"
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="m-4">
+                                    <h1 className="font-bold text-purple-500 truncate">
+                                        Keripik kentang
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Toko ibu sumenep
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Rp. 13.000
+                                    </h1>
+                                    <div className="absolute bottom-0 right-0 overflow-hidden rounded-br-lg">
+                                        <img src="/assets/product_decoration.svg" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
+                        >
+                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
+                                <img
+                                    src="/assets/nothing.svg"
+                                    alt="no picture"
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="m-4">
+                                    <h1 className="font-bold text-purple-500 truncate">
+                                        Keripik kentang
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Toko ibu sumenep
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Rp. 13.000
+                                    </h1>
+                                    <div className="absolute bottom-0 right-0 overflow-hidden rounded-br-lg">
+                                        <img src="/assets/product_decoration.svg" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
+                        >
+                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
+                                <img
+                                    src="/assets/keripik.jpeg"
+                                    alt="no picture"
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="m-4">
+                                    <h1 className="font-bold text-purple-500 truncate">
+                                        Keripik kentang
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Toko ibu sumenep
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Rp. 13.000
+                                    </h1>
+                                    <div className="absolute bottom-0 right-0 overflow-hidden rounded-br-lg">
+                                        <img src="/assets/product_decoration.svg" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
+                        >
+                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
+                                <img
+                                    src="/assets/keripik.jpeg"
+                                    alt="no picture"
+                                    className="w-full h-64 object-cover"
+                                />
+                                <div className="m-4">
+                                    <h1 className="font-bold text-purple-500 truncate">
+                                        Keripik kentang
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Toko ibu sumenep
+                                    </h1>
+                                    <h1 className="block text-gray-500 text-sm">
+                                        Rp. 13.000
+                                    </h1>
+                                    <div className="absolute bottom-0 right-0 overflow-hidden rounded-br-lg">
+                                        <img src="/assets/product_decoration.svg" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div class="row">
+                            <div class="col-sm d-flex align-items-center justify-content-center">
+                                <div className="card m-3 rounded-xl" style={{ width: "18rem" }}>
+                                    <img src="/assets/search.svg" className="card-img-top" alt="#image" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">Card title</h5>
+                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex align-items-center justify-content-center">
+                                <div className="card m-3" style={{ width: "18rem" }}>
+                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">Card title</h5>
+                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex align-items-center justify-content-center">
+                                <div className="card m-3" style={{ width: "18rem" }}>
+                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">Card title</h5>
+                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex align-items-center justify-content-center">
+                                <div className="card m-3" style={{ width: "18rem" }}>
+                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">Card title</h5>
+                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex align-items-center justify-content-center">
+                                <div className="card m-3" style={{ width: "18rem" }}>
+                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">Card title</h5>
+                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
+                </div>
+            )
+        }
+
+        const rootElement = document.getElementById('root')
+
+        ReactDOM.render(<App />, rootElement)
+    </script>
+
+</body>
+
+</html>
