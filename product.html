@@ -32,24 +32,36 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
         <div class="container">
-            <a class="navbar-brand text-purple-500 font-bold tracking-widest" href="#!">KantinVirtual</a>
+            <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                href="#!">
+                <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                <p>KantinVirtual</p>
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
                     src="/assets/hamburger.svg" alt=""></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link hover:text-purple-500" href="index.html">
                             Home
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" href="product.html">
+                            Product
                         </a>
                     </li>
                     <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link"
                             href="profile.html">Profile</a></li>
-                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link" href="signup.html">Sign
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
+                            href="signup.html">Sign
                             Up</a></li>
-                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link" href="login.html">Login</a>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500"
+                            href="login.html">Login</a>
                     </li>
-                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500"
+                            href="#">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -101,11 +113,13 @@
 
         const App = () => {
             const [angka, setAngka] = useState(0)
-            const userData = localStorage.getItem("tokenData")
+            const userData = JSON.parse(localStorage.getItem("tokenData"))
+            console.log(userData)
             let userRole = "not logged in"
             if (userData !== null) {
                 userRole = userData.type
             }
+            console.log("tipe", userRole)
 
             const handleKeyDown = (event) => {
                 if (event.key === 'Enter') {
@@ -127,10 +141,12 @@
                                     <img src="/assets/search.svg" alt="" />
                                 </div>
 
-                                {userRole === "not logged in" ? (
+                                {userRole !== "seller" ? (
                                     <div></div>
                                 ) : (
-                                    <div className="btn btn-primary mx-2">Tambah</div>
+                                    <div className="flex items-center justify-center rounded-xl border-2 border-gray-300 hover:border-purple-500 cursor-pointer hover:shadow-lg" style={{ height: "44px", width: "44px" }}>
+                                        +
+                                    </div>
                                 )}
                             </div>
                         </div>
