@@ -118,7 +118,7 @@
             const [harga, setHarga] = useState("")
             const [stok, setStok] = useState("")
             const [deskripsi, setDeskripsi] = useState("")
-            const [photoUrl, setPhotoUrl] = useState("https://goggle.com")
+            const [photoUrl, setPhotoUrl] = useState("https://google.com")
             const userData = JSON.parse(localStorage.getItem("tokenData"))
             const tokenAuth = localStorage.getItem("token")
 
@@ -235,7 +235,7 @@
                 })
 
                 const payloadObj = {
-                    name: nama,
+                    name: nama.toLowerCase(),
                     description: deskripsi,
                     imageUrl: photoUrl,
                     price: harga,

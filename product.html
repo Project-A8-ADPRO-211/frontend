@@ -154,6 +154,15 @@
                 }
             }
 
+            function toTitleCase(str) {
+                return str.replace(
+                    /\w\S*/g,
+                    function (txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    }
+                )
+            }
+
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
             const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
 
@@ -215,13 +224,13 @@
                                 >
                                     <div className="bg-white rounded-2xl overflow-hidden shadow-md">
                                         <img
-                                            src={val.imageUrl === "https://google.com" ? "/assets/nothing.svg" : val.imageUrl}
+                                            src={val.imageUrl === "https://google.com" ? "assets/nothing.svg" : val.imageUrl}
                                             alt="gambar produk"
                                             className="w-full h-64 object-cover"
                                         />
                                         <div className="m-4">
                                             <h1 className="font-bold text-purple-500 truncate">
-                                                {val.name}
+                                                {toTitleCase(val.name)}
                                             </h1>
                                             <h1 className="block text-gray-500 text-sm font-bold">
                                                 Rp. {val.price}
