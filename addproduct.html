@@ -260,7 +260,8 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Product anda berhasil dibuat',
-                            text: 'Anda akan dialihkan ke halaman produk'
+                            text: 'Anda akan dialihkan ke halaman produk',
+                            showConfirmButton: false
                         })
                         setInterval(function () { location.href = 'product.html' }, 2000)
                     })
@@ -270,7 +271,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Terjadi kesalahan',
-                            text: 'silahkan cek input / koneksi internet anda'
+                            text: 'silahkan cek nama produk anda belum digunakan dan koneksi internet anda'
                         })
                     })
 
@@ -307,7 +308,7 @@
                             </div>
                             <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start">
                                 <h1 className="pt-2">Deskripsi Produk</h1>
-                                <textarea required name="deskripsi" placeholder="Deskripsikan produk anda" id="" className="py-2 px-3 rounded-xl w-full md:w-96 h-44 border-2 border-purple-500 focus:outline-none focus:shadow-lg"
+                                <textarea required name="deskripsi" maxlength="254" placeholder="Deskripsikan produk anda" id="" className="py-2 px-3 rounded-xl w-full md:w-96 h-44 border-2 border-purple-500 focus:outline-none focus:shadow-lg"
                                     onChange={deskripsiHandler}
                                 />
                             </div>

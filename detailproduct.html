@@ -231,21 +231,34 @@
                                         <p className="text-lg font-semibold text-gray-400">Produk oleh : {product.ownerAccount.name}</p>
                                         <p>Stok : {product.stock === 0 ? <span className="text-red-500">Habis</span> : product.stock}</p>
                                         <p>{product.description}</p>
-                                        <div className="pt-7 font-semibold text-white flex flex-col space-y-6 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-6">
-                                            <a href="" className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center">
-                                                Beli
-                                            </a>
-                                            <a href="" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center">
-                                                Masukkan ke Keranjang
-                                            </a>
-                                        </div>
-                                        {user !== "" && user.name === product.ownerAccount.name &&
-                                            <div className="pt-2 flex flex-col">
+                                        {user !== "" && user.name === product.ownerAccount.name ? (
+                                            <div className="pt-2 flex flex-col lg:flex-row space-x-0 lg:space-x-6 space-y-6 lg:space-y-0">
                                                 <a href="" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center">
                                                     Edit Produk
                                                 </a>
+                                                <a href="" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-red-400 text-red-400 hover:text-red-400 hover:no-underline hover:shadow-lg text-center">
+                                                    Hapus Produk
+                                                </a>
                                             </div>
-                                        }
+                                        ) : user === "" ? (
+                                            <div>
+                                                <p className="text-purple-500">Login terlebih dahulu untuk dapat membeli</p>
+                                                <div className="pt-7 font-semibold text-white flex flex-col space-y-6 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-6">
+                                                    <a href="" className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center">
+                                                        Login
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="pt-7 font-semibold text-white flex flex-col space-y-6 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-6">
+                                                <a href="" className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center">
+                                                    Beli
+                                                </a>
+                                                <a href="" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center">
+                                                    Masukkan ke Keranjang
+                                                </a>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
