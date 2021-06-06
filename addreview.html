@@ -114,11 +114,8 @@
         const baseurl = "http://localhost:5500/"
 
         const App = () => {
-            const [nama, setNama] = useState("")
-            const [harga, setHarga] = useState("")
-            const [stok, setStok] = useState("")
-            const [deskripsi, setDeskripsi] = useState("")
-            const [photoUrl, setPhotoUrl] = useState("https://google.com")
+            const [star, setStar] = useState(1)
+            const [content, setContent] = useState("")
             const userData = JSON.parse(localStorage.getItem("tokenData"))
             const tokenAuth = localStorage.getItem("token")
 
@@ -131,7 +128,7 @@
 
             const handleKeyDown = (event) => {
                 if (event.key === 'Enter') {
-                    setAngka(angka + 1)
+                    console.log("clicked")
                 }
             }
 
@@ -142,20 +139,12 @@
                 window.location = baseurl + "product.html"
             }
 
-            const namaHandler = (e) => {
-                setNama(e.target.value)
+            const starHandler = (e) => {
+                setStar(e.target.value)
             }
 
-            const hargaHandler = (e) => {
-                setHarga(e.target.value)
-            }
-
-            const stokHandler = (e) => {
-                setStok(e.target.value)
-            }
-
-            const deskripsiHandler = (e) => {
-                setDeskripsi(e.target.value)
+            const contentHandler = (e) => {
+                setContent(e.target.value)
             }
 
             const photoHandler = async (e) => {
@@ -221,34 +210,28 @@
 
             const onSubmit = async (event) => {
                 event.preventDefault()
-                console.log(nama)
-                console.log(harga)
-                console.log(stok)
-                console.log(deskripsi)
-                console.log(photoUrl)
+                console.log(star)
+                console.log(content)
 
                 Swal.fire({
-                    title: 'Sedang mengupdate produk anda',
+                    title: 'Sedang mengirim review anda',
                     text: 'Mohon menunggu',
                     allowOutsideClick: false,
                     didOpen: () => { Swal.showLoading() }
                 })
 
                 const payloadObj = {
-                    name: nama.toLowerCase(),
-                    description: deskripsi,
-                    imageUrl: photoUrl,
-                    price: harga,
-                    stock: stok
+                    star: star,
+                    content: content
                 }
 
                 const payloadJson = JSON.stringify(payloadObj)
 
-                await fetch(authBaseUrl + "product/update/" + localStorage.getItem("product_id"), {
-                    method: 'PUT',
+                await fetch(authBaseUrl + "product/" + localStorage.getItem("product_id") + "/create/review", {
+                    method: 'POST',
                     headers: {
                         'Authorization': "Bearer " + tokenAuth,
-                        'Content-Type': "application/json"
+                        'Content-Type': "application/json",
                     },
                     body: payloadJson,
                 })
@@ -259,7 +242,7 @@
                         Swal.close()
                         Swal.fire({
                             icon: 'success',
-                            title: 'Product anda berhasil diupdate',
+                            title: 'Review anda berhasil dibuat',
                             text: 'Anda akan dialihkan ke halaman produk',
                             showConfirmButton: false
                         })
@@ -271,95 +254,41 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Terjadi kesalahan',
-                            text: 'silahkan cek nama produk anda belum digunakan dan koneksi internet anda'
+                            text: 'Anda tidak dapat memberikan review 2 kali atau periksa internet anda'
                         })
                     })
+
+
             }
-
-            useEffect(() => {
-                fetch(authBaseUrl + "product/" + localStorage.getItem("product_id"))
-                    .then(response => response.json())
-                    .then(data => {
-                        setNama(data.name)
-                        setHarga(data.price)
-                        setStok(data.stock)
-                        setDeskripsi(data.description)
-                        setPhotoUrl(data.imageUrl)
-                    })
-                    .catch(() => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Terjadi kesalahan',
-                            text: 'Periksa internet anda dan periksa akun anda',
-                            showConfirmButton: false
-                        })
-                        setInterval(function () { location.href = 'product.html' }, 2000)
-                    })
-            }, [])
-
-            console.log(nama)
 
             return (
                 <div>
-                    {nama === "" ? (
-                        <div>
+                    <div className="container mx-auto mt-24" style={{ maxWidth: "768px" }}>
+                        <div className="flex flex-col items-center md:items-start">
+                            <h1 className="mb-2 text-3xl sm:text-4xl">Tambah Review</h1>
+                            <div className="w-1/12 bg-purple-500 px-3 h-1 rounded-xl" />
                         </div>
-                    ) : (
-                        <div>
-                            <div className="container mx-auto mt-24" style={{ maxWidth: "768px" }}>
-                                <div className="flex flex-col items-center md:items-start">
-                                    <h1 className="mb-2 text-3xl sm:text-4xl">Edit Produk</h1>
-                                    <div className="w-1/12 bg-purple-500 px-3 h-1 rounded-xl" />
-                                </div>
+                    </div>
+                    <form className="container mx-auto mt-12 mb-8" style={{ maxWidth: "768px" }} onSubmit={(event) => onSubmit(event)}>
+                        <div className="flex flex-col space-y-8 rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
+                                <h1>Bintang Produk</h1>
+                                <input required type="number" defaultValue={star} name="star" placeholder="Masukkan angka 1-5" min="1" max="5" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
+                                    onChange={starHandler}
+                                />
                             </div>
-                            <form className="container mx-auto mt-12 mb-8" style={{ maxWidth: "768px" }} onSubmit={(event) => onSubmit(event)}>
-                                <div className="flex flex-col space-y-8 rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
-                                    <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
-                                        <h1>Nama Produk</h1>
-                                        <input required defaultValue={nama} type="text" name="nama" placeholder="Masukkan nama produkmu" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
-                                            onChange={namaHandler}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
-                                        <h1>Harga Produk</h1>
-                                        <input required defaultValue={harga} type="number" name="harga" placeholder="Masukkan harga produkmu" min="0" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
-                                            onChange={hargaHandler}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
-                                        <h1>Stok Produk</h1>
-                                        <input required defaultValue={stok} type="number" name="stok" placeholder="Masukkan stok produkmu" min="0" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
-                                            onChange={stokHandler}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start">
-                                        <h1 className="pt-2">Deskripsi Produk</h1>
-                                        <textarea required defaultValue={deskripsi} name="deskripsi" maxlength="254" placeholder="Deskripsikan produk anda" id="" className="py-2 px-3 rounded-xl w-full md:w-96 h-44 border-2 border-purple-500 focus:outline-none focus:shadow-lg"
-                                            onChange={deskripsiHandler}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
-                                        <h1>Foto Produk</h1>
-                                        <input type="file" name="foto" placeholder="gambar produk" className="w-full md:w-96 focus:outline-none focus:shadow-lg" accept="image/png, image/jpeg"
-                                            onChange={photoHandler}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
-                                        <h1>Foto saat ini</h1>
-                                        {photoUrl === "https://google.com" ? (
-                                            <img src="assets/nothing.svg" alt="nothing photo" style={{width: "300px"}} />
-                                        ) : (
-                                            <img src={photoUrl} alt="image" style={{width: "300px"}} />
-                                        )}
-                                    </div>
-                                    <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-4 md:space-y-0 items-center justify-center pt-6">
-                                        <a href="detailproduct.html" className="px-6 text-purple-500 py-2 border-2 border-purple-500 rounded-xl hover:text-purple-500 hover:no-underline hover:shadow-lg w-full md:w-auto text-center">Kembali</a>
-                                        <button className="px-6 py-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Update Produk</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start">
+                                <h1 className="pt-2">Review Produk</h1>
+                                <textarea required name="content" maxlength="254" placeholder="Deskripsikan pengalaman anda" id="" className="py-2 px-3 rounded-xl w-full md:w-96 h-44 border-2 border-purple-500 focus:outline-none focus:shadow-lg"
+                                    onChange={contentHandler}
+                                />
+                            </div>
+                            <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-4 md:space-y-0 items-center justify-center pt-6">
+                                <a href="detailproduct.html" className="px-6 text-purple-500 py-2 border-2 border-purple-500 rounded-xl hover:text-purple-500 hover:no-underline hover:shadow-lg w-full md:w-auto text-center">Kembali</a>
+                                <button className="px-6 py-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Submit</button>
+                            </div>
                         </div>
-                    )}
+                    </form>
                 </div>
             )
         }
