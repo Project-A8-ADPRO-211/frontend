@@ -18,12 +18,12 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         #glassM {
-            background: rgba( 255, 255, 255, 0.50 );
-            box-shadow: 0 4px 20px -7px rgba( 31, 38, 135, 0.37 );
-            backdrop-filter: blur( 7.0px );
-            -webkit-backdrop-filter: blur( 7.0px );
+            background: rgba(255, 255, 255, 0.50);
+            box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(7.0px);
+            -webkit-backdrop-filter: blur(7.0px);
             /* border-radius: 10px; */
-            border: 1px solid rgba( 255, 255, 255, 0.18 );
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
     </style>
 </head>
@@ -32,20 +32,36 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
         <div class="container">
-            <a class="navbar-brand text-purple-500 font-bold tracking-widest" href="#!">KantinVirtual</a>
+            <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                href="#!">
+                <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                <p>KantinVirtual</p>
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img src="/assets/hamburger.svg" alt=""></button>
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                    src="/assets/hamburger.svg" alt=""></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link hover:text-purple-500" href="index.html">
                             Home
                         </a>
                     </li>
-                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link" href="profile.html">Profile</a></li>
-                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link" href="signup.html">Sign Up</a></li>
-                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link" href="login.html">Login</a></li>
-                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" href="product.html">
+                            Product
+                        </a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link hover:text-purple-500"
+                            href="profile.html">Profile</a></li>
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
+                            href="signup.html">Sign
+                            Up</a></li>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500"
+                            href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500"
+                            href="#">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -97,17 +113,68 @@
 
         const App = () => {
             const [angka, setAngka] = useState(0)
-            const userData = localStorage.getItem("tokenData")
+            const [products, setProducts] = useState("")
+            const userData = JSON.parse(localStorage.getItem("tokenData"))
+
+            console.log(userData)
+
             let userRole = "not logged in"
+
             if (userData !== null) {
                 userRole = userData.type
             }
 
+            console.log("tipe", userRole)
+
             const handleKeyDown = (event) => {
                 if (event.key === 'Enter') {
-                    setAngka(angka + 1)
+                    console.log(event.target.value)
+                    if (event.target.value === "") {
+                        fetch(authBaseUrl + "product")
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data)
+                                setProducts(data)
+                            })
+                            .catch(error => console.log(error))
+                    } else {
+                        fetch(authBaseUrl + "product/name/" + event.target.value)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data)
+
+                                if (data.length === 0) {
+                                    setProducts("not found")
+                                } else {
+                                    setProducts(data)
+                                }
+                            })
+                            .catch(error => console.log(error))
+                    }
                 }
             }
+
+            function toTitleCase(str) {
+                return str.replace(
+                    /\w\S*/g,
+                    function (txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    }
+                )
+            }
+
+            const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
+            const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
+
+            useEffect(() => {
+                fetch(authBaseUrl + "product")
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        setProducts(data)
+                    })
+                    .catch(error => console.log(error))
+            }, [])
 
             return (
                 <div>
@@ -123,173 +190,63 @@
                                     <img src="/assets/search.svg" alt="" />
                                 </div>
 
-                                {userRole === "not logged in" ? (
+                                {userRole !== "seller" ? (
                                     <div></div>
                                 ) : (
-                                    <div className="btn btn-primary mx-2">Tambah</div>
+                                    <a className="flex items-center justify-center rounded-xl border-2 border-gray-300 hover:border-purple-500 cursor-pointer hover:shadow-lg hover:no-underline hover:text-black" style={{ height: "44px", width: "44px" }} href="addproduct.html">
+                                        +
+                                    </a>
                                 )}
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap flex-col sm:flex-row items-center justify-center lg:justify-between gap-10 md:gap-16 xl:gap-20 2xl:gap-24 my-12 container mx-auto">
-                        <div
-                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
-                        >
-                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                                <img
-                                    src="/assets/nothing.svg"
-                                    alt="no picture"
-                                    className="w-full h-64 object-cover"
-                                />
-                                <div className="m-4">
-                                    <h1 className="font-bold text-purple-500 truncate">
-                                        Keripik kentang
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Toko ibu sumenep
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Rp. 13.000
-                                    </h1>
-                                </div>
+                    <div className="flex flex-wrap flex-col sm:flex-row items-center justify-center lg:justify-start gap-10 md:gap-16 xl:gap-20 2xl:gap-24 my-12 container mx-auto">
+                        {products === "" ? (
+                            <p className="text-2xl font-bold">Loading products......</p>
+                        ) : products.length === 0 ? (
+                            <div>
+                                <p className="text-2xl font-bold">Belum ada produk</p>
+                                <p className="text-base">login sebagai penjual untuk menambahkan produk</p>
                             </div>
-                        </div>
-                        <div
-                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
-                        >
-                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                                <img
-                                    src="/assets/keripik.jpeg"
-                                    alt="no picture"
-                                    className="w-full h-64 object-cover"
-                                />
-                                <div className="m-4">
-                                    <h1 className="font-bold text-purple-500 truncate">
-                                        Keripik kentang
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Toko ibu sumenep
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Rp. 13.000
-                                    </h1>
-                                </div>
+                        ) : products === "not found" ? (
+                            <div>
+                                <p className="text-2xl font-bold">Produk tidak ditemukan</p>
+                                <p className="text-base">periksa penggunaan huruf kapital dan nama produk</p>
                             </div>
-                        </div>
-                        <div
-                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
-                        >
-                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                                <img
-                                    src="/assets/nothing.svg"
-                                    alt="no picture"
-                                    className="w-full h-64 object-cover"
-                                />
-                                <div className="m-4">
-                                    <h1 className="font-bold text-purple-500 truncate">
-                                        Keripik kentang
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Toko ibu sumenep
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Rp. 13.000
-                                    </h1>
+                        ) : (
+                            products.map((val, index) => (
+                                <div
+                                    className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
+                                    onClick={() => {
+                                        localStorage.setItem("product_id", val.id)
+                                        location.href = `detailproduct.html`
+                                    }}
+                                >
+                                    <div className="bg-white rounded-2xl overflow-hidden shadow-md">
+                                        <img
+                                            src={val.imageUrl === "https://google.com" ? "assets/nothing.svg" : val.imageUrl}
+                                            alt="gambar produk"
+                                            className="w-full h-64 object-cover"
+                                        />
+                                        <div className="m-4">
+                                            <h1 className="font-bold text-purple-500 truncate">
+                                                {toTitleCase(val.name)}
+                                            </h1>
+                                            <h1 className="block text-gray-500 text-sm font-bold">
+                                                Rp. {val.price}
+                                            </h1>
+                                            <h1 className="block text-gray-500 text-sm">
+                                                {val.ownerAccount.name}
+                                            </h1>
+                                            <div className="absolute bottom-0 right-0 overflow-hidden rounded-br-lg">
+                                                <img src="/assets/product_decoration.svg" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div
-                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
-                        >
-                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                                <img
-                                    src="/assets/keripik.jpeg"
-                                    alt="no picture"
-                                    className="w-full h-64 object-cover"
-                                />
-                                <div className="m-4">
-                                    <h1 className="font-bold text-purple-500 truncate">
-                                        Keripik kentang
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Toko ibu sumenep
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Rp. 13.000
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            className="flex-initial w-5/6 sm:w-1/3 lg:w-1/5 xl:w-1/5 relative cursor-pointer"
-                        >
-                            <div className="bg-white rounded-2xl overflow-hidden shadow-md">
-                                <img
-                                    src="/assets/keripik.jpeg"
-                                    alt="no picture"
-                                    className="w-full h-64 object-cover"
-                                />
-                                <div className="m-4">
-                                    <h1 className="font-bold text-purple-500 truncate">
-                                        Keripik kentang
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Toko ibu sumenep
-                                    </h1>
-                                    <h1 className="block text-gray-500 text-sm">
-                                        Rp. 13.000
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
+                            ))
+                        )}
                     </div>
-                    {/* <div class="row">
-                            <div class="col-sm d-flex align-items-center justify-content-center">
-                                <div className="card m-3 rounded-xl" style={{ width: "18rem" }}>
-                                    <img src="/assets/search.svg" className="card-img-top" alt="#image" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">Card title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex align-items-center justify-content-center">
-                                <div className="card m-3" style={{ width: "18rem" }}>
-                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">Card title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex align-items-center justify-content-center">
-                                <div className="card m-3" style={{ width: "18rem" }}>
-                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">Card title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex align-items-center justify-content-center">
-                                <div className="card m-3" style={{ width: "18rem" }}>
-                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">Card title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex align-items-center justify-content-center">
-                                <div className="card m-3" style={{ width: "18rem" }}>
-                                    <img src="assets/favicon.ico" className="card-img-top" alt="#image" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">Card title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                 </div>
             )
         }
