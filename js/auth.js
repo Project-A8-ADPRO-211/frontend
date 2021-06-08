@@ -1,6 +1,6 @@
 const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
 
-const authBaseUrl = "http://localhost:8080/"
+const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
 
 let loginState = false;
 let loginAccType = "";

@@ -121,7 +121,6 @@
                     e.preventDefault();
                     if(noRekField.val() < 0 ||  noCCField.val() < 0 || noCVVField.val() < 0) return alert("Please fill with the correct account number!")
                     if(amountField.val() < 0) return alert("Please fill the amount with the correct number!")
-                    console.log(topupTypeField.val())
                     if(topupTypeField.val() === "ATM") {
                         topupATM(amountField.val(), noRekField.val())
                         .then((data) => location.href = "history.html").catch((err) => {
@@ -130,7 +129,6 @@
                                 title: 'Oops...',
                                 text: 'You need to fill all the field'
                             })
-                            console.log(err)
                         })
                     } else {
                         topupCC(amountField.val(), noCCField.val(), noCVVField.val())
@@ -140,7 +138,6 @@
                                 title: 'Oops...',
                                 text: 'You need to fill all the field'
                             })
-                            console.log(err)
                         })
                     }
                 })
