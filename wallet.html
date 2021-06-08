@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <meta name="google-signin-client_id" content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+            <div class="container">
+                <a class="navbar-brand" href="#!">KantinVirtual</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item active"><a class="nav-link" href="#!">Profile</a></li>
+                        <li class="nav-item" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content-->
+        <div class="container">
+            <div class="text-center">
+                <h1 class="mt-5">My Wallet</h1>
+                <p class="lead" id="walletText"></p>
+                <a href="topup.html">Top Up</a>
+                <a href="withdraw.html">Withdraw</a>
+                <a href="history.html">See All Transaction</a>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/lib/jwt-decode.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/wallet.js"></script>
+
+        <script>
+           (function () {
+                loadLoginData()
+
+                if(getLoggedInStatus()) {
+                    $('#signupbtn').hide();
+                    $('#loginbtn').hide();
+
+                    getWalletData().then((response) => {
+                        console.log(response)
+                        $('#walletText').text("Balance: " + response.balance)
+                    }).catch(reason => alert(reason))
+                } else {
+                    location.href = "index.html";
+                }
+
+                $('#logoutbtn').on("click", function (e) {
+                    logout();
+                })
+            })()
+        </script>
+    </body>
+</html>
