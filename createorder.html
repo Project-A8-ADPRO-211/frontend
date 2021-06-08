@@ -25,24 +25,10 @@
             /* border-radius: 10px; */
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
-
-        #hero {
-            width: 500px;
-            padding-right: 20px;
-            padding-left: 20px;
-        }
-
-        @media only screen and (max-width: 768px) {
-            #hero {
-                width: 300px;
-                margin-top: 110px;
-            }
-        }
     </style>
 </head>
 
 <body>
-
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
         <div class="container">
@@ -68,34 +54,23 @@
                     </li>
                     <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
                         href="order_list.html">Orders</a></li>
-                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link hover:text-purple-500"
+                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link"
                             href="profile.html">Profile</a></li>
-                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500" href="signup.html">Sign
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
+                            href="signup.html">Sign
                             Up</a></li>
-                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500" href="login.html">Login</a>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500"
+                            href="login.html">Login</a>
                     </li>
-                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500" href="#">Logout</a></li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500"
+                            href="#">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Page content-->
-    <div class="container h-screen">
-        <div class="flex flex-col lg:flex-row space-x-0 lg:space-x-6 space-y-3 lg:space-y-0 h-full items-center justify-evenly">
-            <img src="/assets/market.svg" alt="market vector" id="hero">
-            <div class="flex flex-col space-y-6 items-center lg:items-start justify-center lg:justify-start">
-                <img src="/assets/logo.svg" alt="kantin virtual logo" width="70px;">
-                <div class="flex flex-col space-y-3 items-center lg:items-start justify-center lg:justify-start">
-                    <h1 class="text-5xl lg:text-8xl text-center">Kantin Virtual</h1>
-                    <h1 class="text-xl lg:text-3xl text-center">A marketplace design and made for Pacillians</h1>
-                    <div class="py-3">
-                        <a href="product.html" class="px-6 py-3 bg-purple-500 rounded-xl mt-3 text-white font-medium hover:no-underline hover:shadow-lg">Explore Now !</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Page content using react-->
+    <div id="root"></div>
 
     <!-- Bootstrap core JS-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -103,9 +78,11 @@
     <script src="js/lib/jwt-decode.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="js/auth.js"></script>
+
     <!-- Core theme JS-->
     <script>
         (function () {
@@ -126,7 +103,3 @@
 
         })()
     </script>
-
-</body>
-
-</html>

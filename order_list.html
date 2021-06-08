@@ -1,98 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-    <meta name="google-signin-client_id"
-        content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
-
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <meta name="google-signin-client_id"
+            content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+    
+        <!-- Tailwind -->
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <style>
             #glassM {
-                background: rgba( 255, 255, 255, 0.50 );
-                box-shadow: 0 4px 20px -7px rgba( 31, 38, 135, 0.37 );
-                backdrop-filter: blur( 7.0px );
-                -webkit-backdrop-filter: blur( 7.0px );
+                background: rgba(255, 255, 255, 0.50);
+                box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+                backdrop-filter: blur(7.0px);
+                -webkit-backdrop-filter: blur(7.0px);
                 /* border-radius: 10px; */
-                border: 1px solid rgba( 255, 255, 255, 0.18 );
+                border: 1px solid rgba(255, 255, 255, 0.18);
             }
         </style>
-</head>
-
-<body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
-        <div class="container">
-            <a class="navbar-brand text-purple-500 font-bold tracking-widest" href="#!">KantinVirtual</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img src="/assets/hamburger.svg" alt=""></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link" href="profile.html">Profile</a></li>
-                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link" href="signup.html">Sign Up</a></li>
-                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link" href="login.html">Login</a></li>
-                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
-                </ul>
+    </head>
+    
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
+            <div class="container">
+                <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                    href="#!">
+                    <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                    <p>KantinVirtual</p>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                        src="/assets/hamburger.svg" alt=""></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" href="index.html">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" href="product.html">
+                                Product
+                            </a>
+                        </li>
+                        <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
+                            href="order_list.html">Orders</a></li>
+                        <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link hover:text-purple-500"
+                                href="profile.html">Profile</a></li>
+                        <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
+                                href="signup.html">Sign
+                                Up</a></li>
+                        <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500"
+                                href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500"
+                                href="#">Logout</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- Order List-->
-    <!-- Bootstrap core JS-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/lib/jwt-decode.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        </nav>
+    
+        <!-- Page content using react-->
+        <div id="root"></div>
+    
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/lib/jwt-decode.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/auth.js"></script>
+    
+        <!-- Core theme JS-->
+        <script>
+            (function () {
+                loadLoginData()
+    
+                if (getLoggedInStatus()) {
+                    $('#signupbtn').hide();
+                    $('#loginbtn').hide();
+                } else {
+                    $('#logoutbtn').hide();
+                    $('#profilebtn').hide();
+                    $('#orderbtn').hide();
+                }
+    
+                $('#logoutbtn').on("click", function (e) {
+                    logout();
+                })
 
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/order.js"></script>
+                const payloadObj = {
+                    idSeller: 5
+                }
 
-    <!-- Core theme JS-->
-    <script>
-        $(document).ready(function () {
-            loadLoginData()
+                const payloadJson = JSON.stringify(payloadObj)
 
-            if (getLoggedInStatus()) {
-                $('#signupbtn').hide();
-                $('#loginbtn').hide();
-            } else {
-                $('#logoutbtn').hide();
-                $('#profilebtn').hide();
+                const itemObj = {
+                    quantity:5,
+                    productId:7
+                }
+                const itemJson = JSON.stringify(itemObj)
+
+                fetch(authBaseUrl + "order/checkout",{
+                    method: 'POST',
+                    headers: {
+                        'Authorization': "Bearer " + tokenAuth,
+                        'Content-Type': "application/json"
+                    },
+                    body:payloadJson
+                }).then(response => response.json())
+                    .then(data => {
+                        fetch(authBaseUrl + "order/" + data.id + "/create-item", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': "application/json"
+                            },
+                            body:itemJson
+                        })
+                    })
+            })()
+        </script>
+    
+        <!-- Load React. -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        const { useState, useEffect } = React
+        
+        const App = () => {
+            const [orders, setOrders] = useState("");
+            const userData = JSON.parse(localStorage.getItem("tokenData"))
+            const tokenAuth = localStorage.getItem("token")
+
+            console.log(userData)
+
+            // const payloadObj = {
+            //     idSeller: 5
+            // }
+
+            // const payloadJson = JSON.stringify(payloadObj)
+
+            // const itemObj = {
+            //     quantity:5,
+            //     productId:7
+            // }
+            // const itemJson = JSON.stringify(itemObj)
+
+            // fetch(authBaseUrl + "order/checkout",{
+            //     method: 'POST',
+            //     headers: {
+            //         'Authorization': "Bearer " + tokenAuth,
+            //         'Content-Type': "application/json"
+            //     },
+            //     body:payloadJson
+            // }).then(response => response.json())
+            //     .then(data => {
+            //         fetch(authBaseUrl + "order/" + data.id + "/create-item", {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': "application/json"
+            //             },
+            //             body:itemJson
+            //         })
+            //     })
+
+            let userRole = "not logged in"
+
+            if (userData !== null) {
+                userRole = userData.type
             }
 
-            $('#logoutbtn').on("click", function (e) {
-                logout();
+            console.log("tipe", userRole)
+
+            const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
+            const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
+
+            useEffect(() => {
+                fetch(authBaseUrl + "order/all?strategy=" + userRole,{
+                    method: 'GET',
+                    headers: {
+                        'Authorization': "Bearer " + tokenAuth,
+                        'Content-Type': "application/json"
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        setOrders(data)
+                    })
+                    .catch(error => console.log(error))
             })
 
-            const userData = localStorage.getItem("tokenData");
-            let userRole = "not logged in";
-            if (userData !== null){
-                userRole = userData.type;
-            }
+            return(
+                <main>
+                    <div className="container mx-auto mt-24">
+                        <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center md:items-start justify-between">
+                            <div className="flex flex-col items-center md:items-start">
+                                <h1 className="mb-2 text-3xl sm:text-4xl">Your Orders</h1>
+                                <div className="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full flex flex-wrap flex-col items-center justify-center my-12 container mx-auto">
+                        {orders === "" ? (
+                            <p className="text-2xl font-bold">Loading your orders......</p>
+                        ) : orders.length === 0 ? (
+                            
+                            <div class="mt-4 mx-4">
+                                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                                    <div class="w-full overflow-x-auto">
+                                            <table class="w-full">
+                                            <thead>
+                                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                    <th class="px-4 py-3">Seller</th>
+                                                    <th class="px-4 py-3">Amount</th>
+                                                    <th class="px-4 py-3">Status</th>
+                                                    <th class="px-4 py-3">Order Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                                <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                                                    <td class="px-4 py-3">
+                                                    <div class="flex items-center text-sm">
+                                                        <div>
+                                                        <p class="font-semibold">Umji</p>
+                                                        <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                                        </div>
+                                                    </div>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">Rp 25000</td>
+                                                    <td class="px-4 py-3 text-xs">
+                                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
+                                                </tr>
+                                                <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                                                    <td class="px-4 py-3">
+                                                    <div class="flex items-center text-sm">
+                                                        <div>
+                                                        <p class="font-semibold">Pram</p>
+                                                        <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                                        </div>
+                                                    </div>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">Rp 105000</td>
+                                                    <td class="px-4 py-3 text-xs">
+                                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">08-08-2021 18:43</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        // ) : (
+                        //     <div class="mt-4 mx-4">
+                        //         <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                        //             <div class="w-full overflow-x-auto">
+                        //                 {userRole === "buyer"? orders.map((val, index) => (
+                        //                     <table class="w-full">
+                        //                     <thead>
+                        //                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        //                             <th class="px-4 py-3">Seller</th>
+                        //                             <th class="px-4 py-3">Amount</th>
+                        //                             <th class="px-4 py-3">Status</th>
+                        //                             <th class="px-4 py-3">Order Time</th>
+                        //                         </tr>
+                        //                     </thead>
+                        //                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        //                         <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                        //                             <td class="px-4 py-3">
+                        //                             <div class="flex items-center text-sm">
+                        //                                 <div>
+                        //                                 <p class="font-semibold">{val.seller.name}</p>
+                        //                                 <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                        //                                 </div>
+                        //                             </div>
+                        //                             </td>
+                        //                             <td class="px-4 py-3 text-sm">Rp {val.totalPrice}</td>
+                        //                             <td class="px-4 py-3 text-xs">
+                        //                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"> Approved </span>
+                        //                             </td>
+                        //                             <td class="px-4 py-3 text-sm">{val.orderTime}</td>
+                        //                         </tr>
+                        //                     </tbody>
+                        //                 </table>
+                        //                 )): orders.map((val, index) => (
+                        //                     <table class="w-full">
+                        //                     <thead>
+                        //                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        //                             <th class="px-4 py-3">Buyer</th>
+                        //                             <th class="px-4 py-3">Amount</th>
+                        //                             <th class="px-4 py-3">Status</th>
+                        //                             <th class="px-4 py-3">Order Time</th>
+                        //                         </tr>
+                        //                     </thead>
+                        //                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        //                         <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                        //                             <td class="px-4 py-3">
+                        //                             <div class="flex items-center text-sm">
+                        //                                 <div>
+                        //                                 <p class="font-semibold">{val.buyer.name}</p>
+                        //                                 <p class="text-xs text-gray-600 dark:text-gray-400">Buyer</p>
+                        //                                 </div>
+                        //                             </div>
+                        //                             </td>
+                        //                             <td class="px-4 py-3 text-sm">Rp {val.totalPrice}</td>
+                        //                             <td class="px-4 py-3 text-xs">
+                        //                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"> Approved </span>
+                        //                             </td>
+                        //                             <td class="px-4 py-3 text-sm">{val.orderTime}</td>
+                        //                         </tr>
+                        //                     </tbody>
+                        //                 </table>
+                        //                 ))}
+                        //             </div>
+                        //         </div>
+                        //     </div>
+                        ):<p></p>
+                        }
+                    </div>
+                </main>
+            )
+            
+        }
+        const rootElement = document.getElementById('root')
 
-            if (userRole === "buyer"){
-                setOrderUserRole("buyer");
-                loadOrdersByBuyer(localStorage.getItem("token"))
-            } else if (userRole === "seller"){
-                setOrderUserRole("seller");
-                loadOrdersBySeller(localStorage.getItem("token"));
-            }
-        })
-        
+        ReactDOM.render(<App />, rootElement)
     </script>
 </body>
 </html>

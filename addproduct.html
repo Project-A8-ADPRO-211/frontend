@@ -52,6 +52,8 @@
                             Product
                         </a>
                     </li>
+                    <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
+                        href="order_list.html">Orders</a></li>
                     <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link"
                             href="profile.html">Profile</a></li>
                     <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
@@ -92,6 +94,7 @@
             } else {
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();
+                $('#orderbtn').hide();
             }
 
             $('#logoutbtn').on("click", function (e) {
