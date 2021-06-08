@@ -58,6 +58,12 @@
                             Product
                         </a>
                     </li>
+                    <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
+                        href="order_list.html">Orders</a></li>
+                    <li class="nav-item active" id="checkoutbtn"><a class="nav-link hover:text-purple-500"
+                        href="createorder.html">Checkout</a></li>
+                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link"
+                            href="profile.html">Profile</a></li>
                     <li class="nav-item active">
                         <a class="nav-link hover:text-purple-500" id="walletbtn" href="wallet.html">Wallet</a>
                     </li>
@@ -100,6 +106,8 @@
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();
                 $('#walletbtn').hide();
+                $('#orderbtn').hide();
+                $('#checkoutbtn').hide();
             }
 
             $('#logoutbtn').on("click", function (e) {
@@ -124,6 +132,7 @@
             const [review, setReview] = useState("")
             const [user, setUser] = useState("")
             const [canReview, setCanReview] = useState(true)
+            const [inCart, setInCart] = useState(false)
             const userData = JSON.parse(localStorage.getItem("tokenData"))
             const tokenAuth = localStorage.getItem("token")
 
@@ -172,6 +181,36 @@
                         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
                     }
                 )
+            }
+
+            function addToCart(){
+                const productId = localStorage.getItem("product_id")
+                let cart = []
+                if (localStorage.getItem("cart") === null){
+                    cart.push(productId)
+                    localStorage.setItem("cart", JSON.stringify(cart))
+                } else{
+                    cart = JSON.parse(localStorage.getItem("cart"))
+                    cart.push(productId)
+                    localStorage.setItem("cart", JSON.stringify(cart))
+                }
+                setInCart(true)
+            }
+
+            function removeFromCart(){
+                let cart = []
+                cart = JSON.parse(localStorage.getItem("cart"))
+                cart = cart.filter(item => item != localStorage.getItem("product_id"))
+                localStorage.setItem("cart", JSON.stringify(cart))
+                $('#removebtn').hide()
+                $('#addcartbtn').show()
+                setInCart(false)
+            }
+
+            function hideAddToCart(){
+                addToCart()
+                $('#addcartbtn').hide()
+                $('#removebtn').show()
             }
 
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
@@ -253,6 +292,14 @@
                 }
             }, [])
 
+            if (inCart){
+                $('#addbtn').hide()
+                $('#removebtn').show()
+            } else{
+                $('#removebtn').hide()
+                $('#addbtn').show()
+            }
+
             console.log("review", review)
 
             return (
@@ -298,7 +345,10 @@
                                         ) : (
                                             <div className="pt-7 font-semibold text-white flex flex-col space-y-6 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-6">
                                                 {product.stock > 0 ? (
-                                                    <a href="" className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center">
+                                                    <a onClick={() => {
+                                                        addToCart()
+                                                        location.href = `createorder.html`}
+                                                    } className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center">
                                                         Beli
                                                     </a>
                                                 ) : (
@@ -307,8 +357,11 @@
                                                     </a>
                                                 )}
 
-                                                <a href="" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center">
+                                                <a onClick={hideAddToCart} id="addbtn" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center">
                                                     Masukkan ke Keranjang
+                                                </a>
+                                                <a onClick={removeFromCart} id="removebtn" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-red-500 text-red-500 hover:text-red-500 hover:no-underline hover:shadow-lg text-center">
+                                                    Keluarkan dari Keranjang
                                                 </a>
                                             </div>
                                         )}
