@@ -10,36 +10,73 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <meta name="google-signin-client_id" content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
-    </head>
-    <style>
-        #credit-card {
-            display: none;
-        }
-    </style>
+        <meta name="google-signin-client_id"
+            content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+    
+        <!-- Tailwind -->
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            #glassM {
+                background: rgba(255, 255, 255, 0.50);
+                box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+                backdrop-filter: blur(7.0px);
+                -webkit-backdrop-filter: blur(7.0px);
+                /* border-radius: 10px; */
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+    
+            #hero {
+                width: 500px;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+    
+            @media only screen and (max-width: 768px) {
+                #hero {
+                    width: 300px;
+                    margin-top: 110px;
+                }
+            }
+
+            #credit-card {
+                display: none;
+            }
+        </style>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
             <div class="container">
-                <a class="navbar-brand" href="#!">KantinVirtual</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                    href="#!">
+                    <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                    <p>KantinVirtual</p>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                        src="/assets/hamburger.svg" alt=""></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" href="index.html">
                                 Home
                             </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="wallet.html">Wallet</a></li>
-                        <li class="nav-item" id="logoutbtn"><a class="nav-link" href="index.html">Logout</a></li>
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" href="product.html">
+                                Product
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" id="walletbtn" href="wallet.html">Wallet</a>
+                        </li>
+                        <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500" href="index.html">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Page content-->
         <div class="container">
-            <div class="row">
+            <div class="row" style="margin-top: 100px">
                 <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                     <h1 class="display-4 py-2 text-truncate"><b>TOP UP</b></h1>
                     <div class="px-2">

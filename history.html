@@ -10,37 +10,79 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <meta name="google-signin-client_id" content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
-    </head>
-    <style>
-        tr {
+        <meta name="google-signin-client_id"
+            content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+    
+        <!-- Tailwind -->
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            #glassM {
+                background: rgba(255, 255, 255, 0.50);
+                box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+                backdrop-filter: blur(7.0px);
+                -webkit-backdrop-filter: blur(7.0px);
+                /* border-radius: 10px; */
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+    
+            #hero {
+                width: 500px;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+    
+            @media only screen and (max-width: 768px) {
+                #hero {
+                    width: 300px;
+                    margin-top: 110px;
+                }
+            }
+
+            tr {
             text-align: left;
-        }
-    </style>
+            }
+        </style>
+    </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-            <div class="container">
-                <a class="navbar-brand" href="#!">KantinVirtual</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="wallet.html">Wallet</a></li>
-                        <li class="nav-item" id="logoutbtn"><a class="nav-link" href="index.html">Logout</a></li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
+        <div class="container">
+            <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                href="#!">
+                <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                <p>KantinVirtual</p>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                    src="/assets/hamburger.svg" alt=""></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" href="index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" href="product.html">
+                            Product
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" id="walletbtn" href="wallet.html">Wallet</a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500" href="signup.html">Sign
+                            Up</a></li>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500" href="index.html">Logout</a></li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
         <!-- Page content-->
         <div class="container">
-            <div class="text-center">
-                <h1 class="mt-5">Transaction History</h1>
+            <div class="text-center" style="margin-top: 100px">
+                <h1 class="display-4 py-2 text-truncate">Transaction History</h1>
                 <p class="lead">
                     <ul class="list-group list-group-flush" id="walletText">
 
