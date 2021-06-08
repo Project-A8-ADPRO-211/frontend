@@ -98,7 +98,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                            <tr id="r1" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
                                     <div>
@@ -135,9 +135,13 @@
         <!-- Core theme JS-->
         <script>
             (function () {
+                setTimeout(function () {
+                    $('#r1').show();
+                }, 1500)
+
                 loadLoginData()
                 const userData = JSON.parse(localStorage.getItem("tokenData"))
-                
+
                 if (getLoggedInStatus()) {
                     $('#signupbtn').hide();
                     $('#loginbtn').hide();
