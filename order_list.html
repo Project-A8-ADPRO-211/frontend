@@ -54,6 +54,8 @@
                         </li>
                         <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
                             href="order_list.html">Orders</a></li>
+                        <li class="nav-item active" id="checkoutbtn"><a class="nav-link hover:text-purple-500"
+                            href="order_list.html">Checkout</a></li>
                         <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link hover:text-purple-500"
                                 href="profile.html">Profile</a></li>
                         <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
@@ -151,11 +153,13 @@
         <script>
             (function () {
                 loadLoginData()
+                const userData = JSON.parse(localStorage.getItem("tokenData"))
                 
-                console.log("masuk ke script")
                 if (getLoggedInStatus()) {
                     $('#signupbtn').hide();
                     $('#loginbtn').hide();
+                    $('#orderkosong').hide();
+                    
                 } else {
                     $('#logoutbtn').hide();
                     $('#profilebtn').hide();
@@ -165,7 +169,7 @@
                 $('#logoutbtn').on("click", function (e) {
                     logout();
                 })
-            })
+            })()
         </script>
 </body>
 </html>
