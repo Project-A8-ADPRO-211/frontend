@@ -98,7 +98,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                            <tr id="r1" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
                                     <div>
@@ -113,7 +113,7 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
                             </tr>
-                            <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                            <tr id="r2" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
                                     <div>
@@ -150,6 +150,10 @@
         <!-- Core theme JS-->
         <script>
             (function () {
+                setTimeout(function () {
+                    $('#r1').show();
+                    $('#r2').show();
+                }, 1291)
                 loadLoginData()
                 const userData = JSON.parse(localStorage.getItem("tokenData"))
                 
