@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <meta name="google-signin-client_id"
+            content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+    
+        <!-- Tailwind -->
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            #glassM {
+                background: rgba(255, 255, 255, 0.50);
+                box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+                backdrop-filter: blur(7.0px);
+                -webkit-backdrop-filter: blur(7.0px);
+                /* border-radius: 10px; */
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+        </style>
+    </head>
+    
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
+            <div class="container">
+                <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                    href="#!">
+                    <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                    <p>KantinVirtual</p>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                        src="/assets/hamburger.svg" alt=""></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" href="index.html">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link hover:text-purple-500" href="product.html">
+                                Product
+                            </a>
+                        </li>
+                        <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
+                            href="order_list.html">Orders</a></li>
+                        <li class="nav-item active" id="checkoutbtn"><a class="nav-link hover:text-purple-500"
+                            href="createorder.html">Checkout</a></li>
+                        <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link hover:text-purple-500"
+                                href="profile.html">Profile</a></li>
+                        <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
+                                href="signup.html">Sign
+                                Up</a></li>
+                        <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500"
+                                href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500"
+                                href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <main>
+            <div class="container mx-auto mt-24">
+                <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center md:items-start justify-between">
+                    <div class="flex flex-col items-center md:items-start">
+                        <h1 class="mb-2 text-3xl sm:text-4xl">Your Orders</h1>
+                        <div class="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
+                    </div>
+                </div>
+            </div>            
+            <div id="orderkosong">
+                <p className="text-2xl font-bold">Belum ada order</p>
+                <p className="text-base">buat order dari halaman produk</p>
+            </div>
+                
+            <div id="orderlist" class="mt-4 mx-4">
+                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">Buyer</th>
+                                <th class="px-4 py-3">Amount</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3">Order Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                    <p class="font-semibold">A8</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">Buyer</p>
+                                    </div>
+                                </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">Rp 25000</td>
+                                <td class="px-4 py-3 text-xs">
+                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Paid </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </main>
+    
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/lib/jwt-decode.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/order.js"></script>
+    
+        <!-- Core theme JS-->
+        <script>
+            (function () {
+                loadLoginData()
+                const userData = JSON.parse(localStorage.getItem("tokenData"))
+                
+                if (getLoggedInStatus()) {
+                    $('#signupbtn').hide();
+                    $('#loginbtn').hide();
+                    $('#orderkosong').hide();
+                    
+                } else {
+                    $('#logoutbtn').hide();
+                    $('#profilebtn').hide();
+                    $('#orderbtn').hide();
+                    $('#checkoutbtn').hide();
+                }
+    
+                $('#logoutbtn').on("click", function (e) {
+                    logout();
+                })
+            })()
+        </script>
+</body>
+</html>
