@@ -25,13 +25,14 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="index.html">
                                 Home
                             </a>
                         </li>
-                        <li class="nav-item active"><a class="nav-link" href="#!">Profile</a></li>
-                        <li class="nav-item" id="logoutbtn"><a class="nav-link" href="#">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="wallet.html">Wallet</a></li>
+                        <li class="nav-item" id="logoutbtn"><a class="nav-link" href="index.html">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,22 +53,22 @@
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">Amount</label>
-                                <input id="amountField" type="number" class="form-control" placeholder="50000">
+                                <input id="amountField" type="number" class="form-control" placeholder="Amount (Ex. 50000)">
                             </div>
                             <div id="atm">
                                 <div class="form-group">
                                     <label class="sr-only">Account Number</label>
-                                    <input id="noRekField" type="number" class="form-control" placeholder="1234567890">
+                                    <input id="noRekField" type="number" class="form-control" placeholder="Acount Number (Ex. 1234567890)">
                                 </div>
                             </div>
                             <div id="credit-card">
                                 <div class="form-group">
                                     <label class="sr-only">Account Number</label>
-                                    <input id="noCCField" type="number" class="form-control" placeholder="1234567890">
+                                    <input id="noCCField" type="number" class="form-control" placeholder="Card Number (Ex. 1234567890)">
                                 </div>
-                                <div class="form_group">
+                                <div class="form-group">
                                     <label class="sr-only">CVV</label>
-                                    <input id="cvvField" type="number" class="form-control" placeholder="123">
+                                    <input id="cvvField" type="number" class="form-control" placeholder="Security Number (Ex. 1234)">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg">Top Up</button>
@@ -120,8 +121,9 @@
                     e.preventDefault();
                     if(noRekField.val() < 0 ||  noCCField.val() < 0 || noCVVField.val() < 0) return alert("Please fill with the correct account number!")
                     if(amountField.val() < 0) return alert("Please fill the amount with the correct number!")
+                    console.log(topupTypeField.val())
                     if(topupTypeField.val() === "ATM") {
-                        topup(amountField.val(), noRekField.val())
+                        topupATM(amountField.val(), noRekField.val())
                         .then((data) => location.href = "history.html").catch((err) => {
                             Swal.fire({
                                 icon: 'error',
@@ -131,7 +133,7 @@
                             console.log(err)
                         })
                     } else {
-                        topup(amountField.val(), noCCField.val(), noCVVField.val())
+                        topupCC(amountField.val(), noCCField.val(), noCVVField.val())
                         .then((data) => location.href = "history.html").catch((err) => {
                             Swal.fire({
                                 icon: 'error',
