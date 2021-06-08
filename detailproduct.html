@@ -113,37 +113,6 @@
 
         })()
     </script>
-    <script>
-        function addToCart(){
-                const productId = localStorage.getItem("product_id")
-                let cart = []
-                if (localStorage.getItem("cart") === null){
-                    cart.push(productId)
-                    localStorage.setItem("cart", JSON.stringify(cart))
-                } else{
-                    cart = JSON.parse(localStorage.getItem("cart"))
-                    cart.push(productId)
-                    localStorage.setItem("cart", JSON.stringify(cart))
-                }
-                setInCart(true)
-        }
-
-        function removeFromCart(){
-            let cart = []
-            cart = JSON.parse(localStorage.getItem("cart"))
-            cart = cart.filter(item => item != localStorage.getItem("product_id"))
-            localStorage.setItem("cart", JSON.stringify(cart))
-            $('#removebtn').hide()
-            $('#addcartbtn').show()
-            setInCart(false)
-        }
-
-        function hideAddToCart(){
-            addToCart()
-            $('#addcartbtn').hide()
-            $('#removebtn').show()
-        }
-    </script>
 
     <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -210,6 +179,36 @@
                     }
                 )
             }
+
+            function addToCart(){
+            const productId = localStorage.getItem("product_id")
+            let cart = []
+            if (localStorage.getItem("cart") === null){
+                cart.push(productId)
+                localStorage.setItem("cart", JSON.stringify(cart))
+            } else{
+                cart = JSON.parse(localStorage.getItem("cart"))
+                cart.push(productId)
+                localStorage.setItem("cart", JSON.stringify(cart))
+            }
+            setInCart(true)
+        }
+
+        function removeFromCart(){
+            let cart = []
+            cart = JSON.parse(localStorage.getItem("cart"))
+            cart = cart.filter(item => item != localStorage.getItem("product_id"))
+            localStorage.setItem("cart", JSON.stringify(cart))
+            $('#removebtn').hide()
+            $('#addcartbtn').show()
+            setInCart(false)
+        }
+
+        function hideAddToCart(){
+            addToCart()
+            $('#addcartbtn').hide()
+            $('#removebtn').show()
+        }
 
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
             const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
