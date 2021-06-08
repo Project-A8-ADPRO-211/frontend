@@ -81,7 +81,7 @@ function withdraw(amount, noRek) {
     })
 }
 
-function topupATM(amount, noRek) {
+function topup(amount, noRek) {
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "wallet/" + "topup?strategy=ATM", {
             "method": "POST",
@@ -114,7 +114,7 @@ function topupATM(amount, noRek) {
     })
 }
 
-function topupCC(amount, noCC, noCVV) {
+function topup(amount, noCC, noCVV) {
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "wallet/" + "topup?strategy=CC", {
             "method": "POST",
