@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>KantinVirtual - Tugas Kelompok ADPRO A8</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <meta name="google-signin-client_id"
+        content="958450163552-tgnfgdqteu4qa26d2hhr8vskik1j9raq.apps.googleusercontent.com">
+
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #glassM {
+            background: rgba(255, 255, 255, 0.50);
+            box-shadow: 0 4px 20px -7px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(7.0px);
+            -webkit-backdrop-filter: blur(7.0px);
+            /* border-radius: 10px; */
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg fixed-top" id="glassM">
+        <div class="container">
+            <a class="navbar-brand text-purple-500 font-bold tracking-widest flex items-center justify-center space-x-3 hover:text-purple-500"
+                href="#!">
+                <img src="/assets/logo.svg" alt="kantin virtual logo" style="height: 20px;">
+                <p>KantinVirtual</p>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><img
+                    src="/assets/hamburger.svg" alt=""></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" href="index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link hover:text-purple-500" href="product.html">
+                            Product
+                        </a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link"
+                            href="profile.html">Profile</a></li>
+                    <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
+                            href="signup.html">Sign
+                            Up</a></li>
+                    <li class="nav-item text-purple-500" id="loginbtn"><a class="nav-link hover:text-purple-500"
+                            href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item text-purple-500" id="logoutbtn"><a class="nav-link hover:text-purple-500"
+                            href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content using react-->
+    <div id="root"></div>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/lib/jwt-decode.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Core theme JS-->
+    <script>
+        (function () {
+            loadLoginData()
+
+            if (getLoggedInStatus()) {
+                $('#signupbtn').hide();
+                $('#loginbtn').hide();
+            } else {
+                $('#logoutbtn').hide();
+                $('#profilebtn').hide();
+            }
+
+            $('#logoutbtn').on("click", function (e) {
+                logout();
+            })
+
+        })()
+    </script>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        const { useState, useEffect } = React
+
+        const baseurl = "http://localhost:5500/"
+
+        const App = () => {
+            const [nama, setNama] = useState("")
+            const [harga, setHarga] = useState("")
+            const [stok, setStok] = useState("")
+            const [deskripsi, setDeskripsi] = useState("")
+            const [photoUrl, setPhotoUrl] = useState("https://google.com")
+            const userData = JSON.parse(localStorage.getItem("tokenData"))
+            const tokenAuth = localStorage.getItem("token")
+
+            //console.log(userData)
+            let userRole = "not logged in"
+            if (userData !== null) {
+                userRole = userData.type
+            }
+            // console.log("tipe", userRole)
+
+            const handleKeyDown = (event) => {
+                if (event.key === 'Enter') {
+                    setAngka(angka + 1)
+                }
+            }
+
+            const signed_url = "https://dikdjt4qzl.execute-api.ap-southeast-1.amazonaws.com/prod/"
+
+            //to prevent that only seller can add product
+            if (userRole === "not logged in") {
+                window.location = baseurl + "product.html"
+            }
+
+            const namaHandler = (e) => {
+                setNama(e.target.value)
+            }
+
+            const hargaHandler = (e) => {
+                setHarga(e.target.value)
+            }
+
+            const stokHandler = (e) => {
+                setStok(e.target.value)
+            }
+
+            const deskripsiHandler = (e) => {
+                setDeskripsi(e.target.value)
+            }
+
+            const photoHandler = async (e) => {
+                const photoFile = e.target.files[0]
+
+                console.log(photoFile)
+
+                Swal.fire({
+                    title: 'Sedang mengupload foto anda',
+                    text: 'Mohon menunggu',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading() }
+                })
+
+                await fetch(signed_url + "upload?name=" + photoFile.name + "&type=" + photoFile.type.split("/")[1])
+                    .then(response => response.json())
+                    .then(async data => {
+                        console.log(data)
+                        let getUrl = data.getUrl
+                        let putUrl = data.putUrl
+                        await fetch(putUrl, {
+                            method: 'PUT', // or 'PUT'
+                            headers: {
+                                'Content-Type': photoFile.type,
+                            },
+                            body: photoFile,
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                setPhotoUrl(getUrl)
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Foto anda berhasil diupload',
+                                    text: 'silahkan isi form yang belum lengkap'
+                                })
+                            })
+                            .catch(error => {
+                                console.error('Error:', error)
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi kesalahan',
+                                    text: 'silahkan input foto kembali'
+                                })
+                            })
+                    })
+                    .catch(error => {
+                        console.error('Error:', error)
+                        Swal.close()
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi kesalahan',
+                            text: 'silahkan input foto kembali'
+                        })
+                    })
+            }
+
+            const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
+            const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
+
+            const onSubmit = async (event) => {
+                event.preventDefault()
+                console.log(nama)
+                console.log(harga)
+                console.log(stok)
+                console.log(deskripsi)
+                console.log(photoUrl)
+
+                Swal.fire({
+                    title: 'Sedang mengirim formulir produk anda',
+                    text: 'Mohon menunggu',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading() }
+                })
+
+                const payloadObj = {
+                    name: nama.toLowerCase(),
+                    description: deskripsi,
+                    imageUrl: photoUrl,
+                    price: harga,
+                    stock: stok
+                }
+
+                const payloadJson = JSON.stringify(payloadObj)
+
+                await fetch(authBaseUrl + "product/create", {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': "Bearer " + tokenAuth,
+                        'Content-Type': "application/json",
+                    },
+                    body: payloadJson,
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        Swal.close()
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Product anda berhasil dibuat',
+                            text: 'Anda akan dialihkan ke halaman produk',
+                            showConfirmButton: false
+                        })
+                        setInterval(function () { location.href = 'product.html' }, 2000)
+                    })
+                    .catch(error => {
+                        console.error('Error:', error)
+                        Swal.close()
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi kesalahan',
+                            text: 'silahkan cek nama produk anda belum digunakan dan koneksi internet anda'
+                        })
+                    })
+
+
+            }
+
+            return (
+                <div>
+                    <div className="container mx-auto mt-24" style={{ maxWidth: "768px" }}>
+                        <div className="flex flex-col items-center md:items-start">
+                            <h1 className="mb-2 text-3xl sm:text-4xl">Tambah Produk</h1>
+                            <div className="w-1/12 bg-purple-500 px-3 h-1 rounded-xl" />
+                        </div>
+                    </div>
+                    <form className="container mx-auto mt-12 mb-8" style={{ maxWidth: "768px" }} onSubmit={(event) => onSubmit(event)}>
+                        <div className="flex flex-col space-y-8 rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
+                                <h1>Nama Produk</h1>
+                                <input required type="text" name="nama" placeholder="Masukkan nama produkmu" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
+                                    onChange={namaHandler}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
+                                <h1>Harga Produk</h1>
+                                <input required type="number" name="harga" placeholder="Masukkan harga produkmu" min="0" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
+                                    onChange={hargaHandler}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
+                                <h1>Stok Produk</h1>
+                                <input required type="number" name="stok" placeholder="Masukkan stok produkmu" min="0" className="py-2 px-3 rounded-xl border-2 border-purple-500 w-full md:w-96 focus:outline-none focus:shadow-lg"
+                                    onChange={stokHandler}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start">
+                                <h1 className="pt-2">Deskripsi Produk</h1>
+                                <textarea required name="deskripsi" maxlength="254" placeholder="Deskripsikan produk anda" id="" className="py-2 px-3 rounded-xl w-full md:w-96 h-44 border-2 border-purple-500 focus:outline-none focus:shadow-lg"
+                                    onChange={deskripsiHandler}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-start md:justify-between items-start md:items-center">
+                                <h1>Foto Produk</h1>
+                                <input type="file" name="foto" placeholder="gambar produk" className="w-full md:w-96 focus:outline-none focus:shadow-lg" accept="image/png, image/jpeg"
+                                    onChange={photoHandler}
+                                />
+                            </div>
+                            <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-4 md:space-y-0 items-center justify-center pt-6">
+                                <a href="product.html" className="px-6 text-purple-500 py-2 border-2 border-purple-500 rounded-xl hover:text-purple-500 hover:no-underline hover:shadow-lg w-full md:w-auto text-center">Kembali</a>
+                                <button className="px-6 py-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Tambah Produk</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            )
+        }
+
+        const rootElement = document.getElementById('root')
+
+        ReactDOM.render(<App />, rootElement)
+    </script>
+
+</body>
+
+</html>
