@@ -55,7 +55,7 @@
                         <li class="nav-item active" id="orderbtn"><a class="nav-link hover:text-purple-500"
                             href="order_list.html">Orders</a></li>
                         <li class="nav-item active" id="checkoutbtn"><a class="nav-link hover:text-purple-500"
-                            href="order_list.html">Checkout</a></li>
+                            href="createorder.html">Checkout</a></li>
                         <li class="nav-item text-purple-500" id="profilebtn"><a class="nav-link hover:text-purple-500"
                                 href="profile.html">Profile</a></li>
                         <li class="nav-item text-purple-500" id="signupbtn"><a class="nav-link hover:text-purple-500"
@@ -79,62 +79,60 @@
                         <div class="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
                     </div>
                 </div>
+            </div>            
+            <div id="orderkosong">
+                <p className="text-2xl font-bold">Belum ada order</p>
+                <p className="text-base">buat order dari halaman produk</p>
             </div>
-            <div class="w-full flex flex-wrap flex-col items-center justify-center my-12 container mx-auto">
-                <div id="orderkosong">
-                    <p className="text-2xl font-bold">Belum ada order</p>
-                    <p className="text-base">buat order dari halaman produk</p>
-                </div>
-                    
-                <div id="orderlist" class="mt-4 mx-4">
-                    <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                        <div class="w-full overflow-x-auto">
-                                <table class="w-full">
-                                <thead>
-                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                        <th class="px-4 py-3">Seller</th>
-                                        <th class="px-4 py-3">Amount</th>
-                                        <th class="px-4 py-3">Status</th>
-                                        <th class="px-4 py-3">Order Time</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                    <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
-                                        <td class="px-4 py-3">
-                                        <div class="flex items-center text-sm">
-                                            <div>
-                                            <p class="font-semibold">Umji</p>
-                                            <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
-                                            </div>
-                                        </div>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">Rp 25000</td>
-                                        <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
-                                    </tr>
-                                    <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
-                                        <td class="px-4 py-3">
-                                        <div class="flex items-center text-sm">
-                                            <div>
-                                            <p class="font-semibold">Pram</p>
-                                            <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
-                                            </div>
-                                        </div>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">Rp 105000</td>
-                                        <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">08-06-2021 18:43</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                
+            <div id="orderlist" class="mt-4 mx-4">
+                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">Seller</th>
+                                <th class="px-4 py-3">Amount</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3">Order Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                    <p class="font-semibold">Umji</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                    </div>
+                                </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">Rp 25000</td>
+                                <td class="px-4 py-3 text-xs">
+                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
+                            </tr>
+                            <tr class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                    <p class="font-semibold">Pram</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                    </div>
+                                </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">Rp 105000</td>
+                                <td class="px-4 py-3 text-xs">
+                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">08-06-2021 18:43</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
         </main>
     
         <!-- Bootstrap core JS-->
@@ -164,6 +162,7 @@
                     $('#logoutbtn').hide();
                     $('#profilebtn').hide();
                     $('#orderbtn').hide();
+                    $('#checkoutbtn').hide();
                 }
     
                 $('#logoutbtn').on("click", function (e) {

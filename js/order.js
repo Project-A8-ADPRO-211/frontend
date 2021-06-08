@@ -6,7 +6,7 @@ function loadOrdersByBuyer(){
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
@@ -31,7 +31,7 @@ function loadOrdersbySeller(){
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
@@ -56,7 +56,7 @@ function createOrder(seller_id){
             "method": "POST",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             },
             "body": {
                 "idSeller": seller_id
@@ -112,7 +112,7 @@ function confirmOrder(order_id){
             "method": "PUT",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
@@ -137,7 +137,7 @@ function cancelOrder(order_id){
             "method": "PUT",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
@@ -162,7 +162,7 @@ function shipOrder(order_id){
             "method": "PUT",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
@@ -187,7 +187,7 @@ function deliverOrder(order_id){
             "method": "PUT",
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "JWT " + getToken()
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
