@@ -81,20 +81,19 @@
             </div>
         </div>
         <div class="mx-auto mt-20 flex flex-col justify-center align-center container">
-        <div class="container w-full flex flex-col space-y-8 rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
+        <div class="container w-full flex flex-col space-y-4 rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
                 <div id="databuyer" class="border-purple-500">
-                    <h2>Acil</h2>
+                    <h2>Buyer: <strong>A8</strong></h2>
                     <p>Jl. Mangrove no.24, Kebayoran Baru, Jakarta Selatan</p>
                 </div>
                 <div id="dataorder" class="flex flex-col pt-8 pr-4">
-                    <h2>Seller: <strong>Umji</strong></h2>
                     <p>Items:</p>
                     <p>Ramen x2</p>
                     <p>Siomay x5</p>
                     <p>Total: Rp 20000</p>
                 </div>
             <div class="w-full bg-purple-500 px-2 h-1 rounded-xl" />
-            <button class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Pay Order</button>
+            <button class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Ship Order</button>
         </div>
     </main>
     <!-- Bootstrap core JS-->
@@ -113,15 +112,23 @@
     <script>
         (function () {
             loadLoginData()
+            const userData = JSON.parse(localStorage.getItem("tokenData"))
+            let userRole = userData.type
+            console.log(userRole)
+            const order_id = localStorage.getItem("order_id")
+            let orderData = ""
 
             if (getLoggedInStatus()) {
                 $('#signupbtn').hide();
                 $('#loginbtn').hide();
+                getOrderById(order_id).then((response) => orderData).catch((reason) => alert(reason))
+                console.log(orderData)
             } else {
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();
                 $('#orderbtn').hide();
                 $('#checkoutbtn').hide();
+                location.href = 'index.html';
             }
 
             $('#logoutbtn').on("click", function (e) {

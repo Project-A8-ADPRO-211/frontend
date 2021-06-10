@@ -80,9 +80,9 @@
                     </div>
                 </div>
             </div>            
-            <div id="orderkosong">
-                <p className="text-2xl font-bold">Belum ada order</p>
-                <p className="text-base">buat order dari halaman produk</p>
+            <div id="orderkosong" class="mt-4 mx-4">
+                <p class="text-2xl font-bold">Belum ada order</p>
+                <p class="text-base">buat order dari halaman produk</p>
             </div>
                 
             <div id="orderlist" class="mt-4 mx-4">
@@ -91,14 +91,14 @@
                         <table class="w-full">
                         <thead>
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">Seller</th>
-                                <th class="px-4 py-3">Amount</th>
+                                <th id="account" class="px-4 py-3">Seller</th>
+                                <th class="px-4 py-3">Total Harga</th>
                                 <th class="px-4 py-3">Status</th>
-                                <th class="px-4 py-3">Order Time</th>
+                                <th class="px-4 py-3">Waktu Order</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr id="r1" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
+                            <tr onclick="location.href = 'orderdetail.html'" id="r1" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
                                 <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
                                     <div>
@@ -112,21 +112,6 @@
                                 <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
                                 </td>
                                 <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
-                            </tr>
-                            <tr id="r2" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3">
-                                <div class="flex items-center text-sm">
-                                    <div>
-                                    <p class="font-semibold">Pram</p>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm">Rp 105000</td>
-                                <td class="px-4 py-3 text-xs">
-                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
-                                </td>
-                                <td class="px-4 py-3 text-sm">08-06-2021 18:43</td>
                             </tr>
                         </tbody>
                     </table>
@@ -152,23 +137,70 @@
             (function () {
                 setTimeout(function () {
                     $('#r1').show();
-                    $('#r2').show();
                 }, 1291)
                 loadLoginData()
                 const userData = JSON.parse(localStorage.getItem("tokenData"))
-                
+                let userRole = userData.type
+                console.log(userRole)
+
+                let orders = []
                 if (getLoggedInStatus()) {
                     $('#signupbtn').hide();
                     $('#loginbtn').hide();
-                    $('#orderkosong').hide();
+                    if (userRole === "buyer"){
+                        $('#account').replaceWith(`<th id="account" class="px-4 py-3">Seller</th>`)
+                        loadOrdersByBuyer().then((response) => orders).catch((reason) => alert(reason))
+                        orders.sort((a,b) => b.orderTime - a.orderTime)
+                        console.log("dari buyer:", orders)
+                    } else {
+                        $('#account').replaceWith(`<th id="account" class="px-4 py-3">Buyer</th>`)
+                        loadOrdersBySeller().then((response) => orders).catch((reason) => alert(reason))
+                        orders.sort((a,b) => b.orderTime - a.orderTime)
+                        console.log("dari seller", orders)
+                    }
+
+                    if (orders.length === 0){
+                        console.log(orders)
+                        $('#orderkosong').show()
+                        // $('#orderlist').hide()
+                    } else{
+                        console.log(orders)
+                        $('#orderlist').show()
+                        $('#orderkosong').hide();
+                    }
                     
+                    orders.forEach(order => {
+                        var time = new Date((order.orderTime).toString())
+                        $('tbody').append(`
+                            <tr onclick="() => {
+                                localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
+                                location.href = 'orderdetail.html'
+                            }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
+                                <td class="px-4 py-3">
+                                    <input readnly hidden id="orderId" type="number" value=`+ order.id +`/>
+                                    <div class="flex items-center text-sm">
+                                        <div>
+                                        <p class="font-semibold">`+ order.seller.name +`</p>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">Rp `+ order.totalPrice +`</td>
+                                <td class="px-4 py-3 text-xs">
+                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> `+ order.status +` </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">`+ time +`</td>
+                            </tr>
+                        `)
+                    });
                 } else {
                     $('#logoutbtn').hide();
                     $('#profilebtn').hide();
                     $('#orderbtn').hide();
                     $('#checkoutbtn').hide();
+                    location.href = 'index.html';
                 }
-    
+
                 $('#logoutbtn').on("click", function (e) {
                     logout();
                 })

@@ -50,7 +50,7 @@ function loadOrdersbySeller(){
     })
 }
 
-function createOrder(seller_id){
+function postOrder(seller_id){
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/checkout", {
             "method": "POST",
@@ -103,6 +103,30 @@ function postItem(order_id, qty, product_id){
             .catch(err => {
                 return reject({'error': err});
             });
+    })
+}
+
+function getOrderById(orderId){
+    return new Promise((resolve, reject) => {
+        fetch(authBaseUrl + "order/" + orderId, {
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json",
+            }
+        })
+        .then(response => {
+            if (response.status !== 200) {
+                console.error("Failed")
+                return PromiseRejectionEvent({'status':response.status});
+            }
+            response.json().then(response => {
+                console.log(response);
+                return resolve(response);
+            })
+        })
+            .catch(err => {
+                return reject({'error':err});
+            })
     })
 }
 
