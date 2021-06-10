@@ -213,6 +213,11 @@
                 $('#removebtn').show()
             }
 
+            function openChatWindow() {
+                const chatWindow = window.open("chat.html", "Chat", "menubar=no");
+                chatWindow.postMessage({"cmd": "new", "destination": product.ownerAccount.id});
+            }
+
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
             const authBaseUrl = testing ? "http://localhost:8080/" : "https://adpros8-prod.herokuapp.com/"
 
@@ -363,6 +368,10 @@
                                                 <a onClick={removeFromCart} id="removebtn" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-red-500 text-red-500 hover:text-red-500 hover:no-underline hover:shadow-lg text-center">
                                                     Keluarkan dari Keranjang
                                                 </a>
+                                                [user?.id !== product?.ownerAccount?.id ?
+                                                    <a onClick={openChatWindow} id={"chatBtn"} className={"px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center"}>
+                                                    Chat Penjual
+                                                </a>: ""]
                                             </div>
                                         )}
                                     </div>
@@ -387,7 +396,7 @@
                                         </a>
                                     )}
                                 </div>
-                                
+
                                 <div className="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
                             </div>
                         </div>
