@@ -214,10 +214,7 @@
             }
 
             function openChatWindow() {
-                const chatWindow = window.open("chat.html", "Chat", "menubar=no");
-                setTimeout(function () {
-                    chatWindow.postMessage({"cmd": "new", "destination": product.ownerAccount.id});
-                }, 1000);
+                openChatWindowReal(product?.ownerAccount?.id);
             }
 
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))

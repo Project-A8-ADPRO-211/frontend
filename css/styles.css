@@ -10006,3 +10006,69 @@ h3 {
     border-color: #dee2e6;
   }
 }
+
+/*Floating Chat Button*/
+@font-face {
+  font-family: 'icomoon';
+  src:  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.eot?xqqx08');
+  src:  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.eot?xqqx08#iefix') format('embedded-opentype'),
+  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.ttf?xqqx08') format('truetype'),
+  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.woff?xqqx08') format('woff'),
+  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.svg?xqqx08#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+
+}
+
+.icon-chat:before {
+  content: "\e970";
+}
+
+.float-container{
+  position:fixed;
+  width:90px;
+  height:44px;
+  bottom:40px;
+  right:40px;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  /*box-shadow: 2px 2px 3px #999;*/
+  box-shadow: 2px 4px 11px 0 rgba(0,0,0,0.5)
+}
+
+.float-container:hover {
+  color:#FFF;
+  /*color: #e2e2e2;*/
+  /*box-shadow: 2px 1px 1.5px #999;*/
+  box-shadow: 1px 2px 11px 0 rgba(0,0,0,0.5);
+  background-color: #5a55bf;
+  cursor: pointer;
+}
+
+.float-btn{
+  margin-top:14px;
+}
+
+.float-btn span {
+  padding-left:5px;
+  text-transform: uppercase;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
