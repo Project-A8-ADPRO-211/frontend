@@ -1,3 +1,5 @@
+let roomData = {};
+
 function getRoomList() {
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "chat", {
@@ -21,6 +23,18 @@ function getRoomList() {
             });
     })
 
+}
+
+function parseTimeStamp(unixTimeStamp) {
+    const time = dayjs(unixTimeStamp);
+    const now = dayjs();
+    if (now.isSame(time, "day")) {
+        return time.format("h:mm a");
+    } else if (now.isSame(time, "week")) {
+        return time.format("dddd, h:mm a");
+    } else {
+        return time.format("LLL")
+    }
 }
 
 function createRoom(receiver) {
@@ -50,7 +64,8 @@ function createRoom(receiver) {
 
 function getRoomMessages(roomId) {
     return new Promise((resolve, reject) => {
-        fetch(authBaseUrl + "chat/" + roomId, {
+        const windowVisible = window.document.visibilityState === "visible";
+        fetch(authBaseUrl + "chat/" + roomId + "?visible=" + (windowVisible ? "true" : "false"), {
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
@@ -77,7 +92,7 @@ function renderChatList(recipient, lastDate, lastMsg, roomId) {
     return `                <div class="chat_list" onclick="handleOpenRoom(${roomId})" id="room-${roomId}">
                                 <div class="chat_people">
                                     <div class="chat_ib">
-                                        <h5>${recipient} <span class="chat_date">${lastDate}</span></h5>
+                                        <h5>${recipient} <span class="chat_date">${parseTimeStamp(lastDate)}</span></h5>
                                         <p>${lastMsg}</p>
                                     </div>
                                 </div>
@@ -116,16 +131,16 @@ function renderIncomingMsgHtml(msg, time) {
                                 <div class="received_msg">
                                     <div class="received_withd_msg">
                                         <p>${msg}</p>
-                                        <span class="time_date">${time}</span></div>
+                                        <span class="time_date">${parseTimeStamp(time)}</span></div>
                                 </div>
                             </div>`
 }
 
-function renderOutgoingMsgHtml(msg, time) {
+function renderOutgoingMsgHtml(msg, time, read) {
     return `                <div class="outgoing_msg">
                                 <div class="sent_msg">
                                     <p>${msg}</p>
-                                    <span class="time_date">${time}</span> </div>
+                                    <span class="time_date">${parseTimeStamp(time)} -- ${read ? "Read" : "Unread"}</span> </div>
                             </div>`
 }
 
@@ -135,13 +150,16 @@ function renderMsgList(roomId) {
         getRoomMessages(roomId).then(data => {
             let htmlData = "";
 
+            const lastSeenMsg = data.lastReadChatMessage;
+            data = data.chatMessageList;
+
             data.sort(function (a,b) {
                     return a?.timeStamp - b?.timeStamp
             })
 
             for(let i = 0; i < data.length; i++) {
                 const obj = data[i];
-                if (obj?.sender?.id == getUserUid()) htmlData += renderOutgoingMsgHtml(obj.message, obj.timeStamp);
+                if (obj?.sender?.id == getUserUid()) htmlData += renderOutgoingMsgHtml(obj.message, obj.timeStamp, lastSeenMsg?.timeStamp >= obj?.timeStamp);
                 else htmlData += renderIncomingMsgHtml(obj.message, obj.timeStamp);
 
             }
@@ -154,6 +172,7 @@ function renderMsgList(roomId) {
 function renderChatRoom() {
     return new Promise((resolve, reject) => {
         getRoomList().then(data => {
+            roomData = {};
             let htmlData = "";
 
             data.sort(function (a,b) {
@@ -172,6 +191,7 @@ function renderChatRoom() {
                 if (obj?.participantA?.id == getUserUid()) recipient = obj?.participantB?.name;
                 else recipient = obj?.participantA?.name;
                 console.log(obj)
+                roomData[obj.id] = obj;
 
                 if (obj?.lastSentMessage)  htmlData += renderChatList(recipient, obj?.lastSentMessage?.timeStamp, obj?.lastSentMessage?.message, obj?.id);
                 else htmlData += renderChatList(recipient, "-", "No Message Yet", obj?.id);

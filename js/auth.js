@@ -69,6 +69,7 @@ function loadLoginData() {
             jQuery('body').append("    <a onclick=\"openChatWindowReal()\" class=\"float-container bg-purple-500 hover:no-underline\">\n" +
                 "        <i class=\"icon-chat float-btn\"><span class=\"font-medium\">chat</span></i>\n" +
                 "    </a>")
+            firstLoad = false;
         }
     } else {
         return removeToken();
