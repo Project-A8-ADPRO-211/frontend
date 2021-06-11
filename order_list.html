@@ -144,6 +144,7 @@
                 console.log(userRole)
 
                 let orders = []
+                let orderacc = ""
                 if (getLoggedInStatus()) {
                     $('#signupbtn').hide();
                     $('#loginbtn').hide();
@@ -151,11 +152,13 @@
                         $('#account').replaceWith(`<th id="account" class="px-4 py-3">Seller</th>`)
                         loadOrdersByBuyer().then((response) => orders).catch((reason) => alert(reason))
                         orders.sort((a,b) => b.orderTime - a.orderTime)
+                        orderacc = "Seller"
                         console.log("dari buyer:", orders)
                     } else {
                         $('#account').replaceWith(`<th id="account" class="px-4 py-3">Buyer</th>`)
                         loadOrdersBySeller().then((response) => orders).catch((reason) => alert(reason))
                         orders.sort((a,b) => b.orderTime - a.orderTime)
+                        orderacc = "Buyer"
                         console.log("dari seller", orders)
                     }
 
@@ -170,17 +173,20 @@
                     }
                     
                     orders.forEach(order => {
+                        let orderaccname = ""
                         var time = new Date((order.orderTime).toString())
+                        if (userRole === "buyer"){orderaccname = order.seller.name}
+                        else{orderaccname = order.buyer.name}
                         $('tbody').append(`
                             <tr onclick="() => {
                                 localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
                                 location.href = 'orderdetail.html'
                             }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
                                 <td class="px-4 py-3">
-                                    <input readnly hidden id="orderId" type="number" value=`+ order.id +`/>
+                                    <input readonly hidden id="orderId" type="number" value=`+ order.id +`/>
                                     <div class="flex items-center text-sm">
                                         <div>
-                                        <p class="font-semibold">`+ order.seller.name +`</p>
+                                        <p class="font-semibold">`+ orderaccname +`</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
                                         </div>
                                     </div>
