@@ -102,10 +102,12 @@
     <script>
         (function () {
             loadLoginData()
-
+            let userData = JSON.parse(localStorage.getItem('tokenData'))
+            let userRole = userData.type
             if (getLoggedInStatus()) {
                 $('#signupbtn').hide();
                 $('#loginbtn').hide();
+                if (userRole === "seller"){$('#checkoutbtn').hide()}
             } else {
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();
@@ -204,8 +206,9 @@
             let item = {
                     productId: product.id,
                     name: product.name,
-                    price: product.price,
+                    price: 0,
                     idSeller: 0,
+                    sellerName:"",
                     quantity: 0
                 }
                 
@@ -216,7 +219,9 @@
                 const cartStorage = localStorage.getItem("cart")
                 console.log("sebelum", cartStorage)
                 item["idSeller"] = $('#idSeller').val()
+                item["sellerName"] = $('#sellerName').val()
                 item["quantity"] = $('#quantity').val()
+                item["price"] = product.price * item['quantity']
                 console.log("setelah", localStorage.getItem("cart"))
                 if (cartStorage === null || cartStorage === "[]"){
                     cart.push(item)
@@ -232,10 +237,11 @@
                         }
                     });   
                 }
-                localStorage.setItem("cart", JSON.stringify(cart))
+                localStorage.setItem("cart", JSON.stringify(Array.from(new Set(cart))))
                 localStorage.setItem("idInCart", JSON.stringify(idInCart))
                 setInCart(true)
                 console.log("setelah ditambah:",localStorage.getItem("cart"))
+                console.log("Set:", JSON.stringify(Array.from(new Set(cart))))
                 console.log("idInCart:", localStorage.getItem("idInCart"))
             }
 
@@ -382,6 +388,7 @@
                                     <img src={product.imageUrl === "https://google.com" ? "assets/nothing.svg" : product.imageUrl} alt="gambar makanan" id="image" className="rounded-xl" />
                                     <div className="flex flex-col h-auto space-y-4 lg:pr-12 xl:pr-40 2xl:pr-64">
                                         <input readOnly hidden id="idSeller" type="text" value={product.ownerAccount.id}/>
+                                        <input readOnly hidden id="sellerName" type="text" value={toTitleCase(product.ownerAccount.name)}/>
                                         <p className="text-4xl font-bold text-purple-500">{toTitleCase(product.name)}</p>
                                         <p className="text-2xl font-bold">Rp. {product.price}</p>
                                         <p className="text-lg font-semibold text-gray-400">Produk oleh : {product.ownerAccount.name}</p>

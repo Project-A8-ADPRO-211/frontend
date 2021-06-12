@@ -97,7 +97,7 @@
                                 <th class="px-4 py-3">Waktu Order</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        <tbody id="isi" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             <tr onclick="location.href = 'orderdetail.html'" id="r1" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
                                 <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
@@ -143,62 +143,106 @@
                 let userRole = userData.type
                 console.log(userRole)
 
-                let orders = []
                 let orderacc = ""
                 if (getLoggedInStatus()) {
                     $('#signupbtn').hide();
                     $('#loginbtn').hide();
+                    if (userRole === "seller"){$('#checkoutbtn').hide()}
                     if (userRole === "buyer"){
                         $('#account').replaceWith(`<th id="account" class="px-4 py-3">Seller</th>`)
-                        loadOrdersByBuyer().then((response) => orders).catch((reason) => alert(reason))
-                        orders.sort((a,b) => b.orderTime - a.orderTime)
-                        orderacc = "Seller"
-                        console.log("dari buyer:", orders)
+                        loadOrdersByBuyer().then((response) => {
+                            if (response.length === 0){
+                                console.log(response)
+                                $('#orderkosong').show()
+                                $('#orderlist').hide()
+                            } else{
+                                console.log("else", response)
+                                $('#orderlist').show()
+                                $('#orderkosong').hide();
+                            }
+                            response.sort((a,b) => b.orderTime - a.orderTime)
+                            orderacc = "Seller"
+                            
+                            console.log(JSON.stringify(response))
+                            console.log("1:", JSON.stringify(response[0]))
+                            response.forEach(order => {
+                                let orderaccname = ""
+                                let time = order.orderTime
+                                time.pop()
+                                time = time.join(" ")
+                                
+                                if (userRole === "buyer"){orderaccname = order.seller.name}
+                                else{orderaccname = order.buyer.name}
+                                $('#isi').append(`
+                                    <tr onclick="() => {
+                                        localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
+                                        location.href = 'orderdetail.html'
+                                    }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
+                                        <td class="px-4 py-3">
+                                            <input readonly hidden id="orderId" type="number" value=`+ order.id +`/>
+                                            <div class="flex items-center text-sm">
+                                                <div>
+                                                <p class="font-semibold">`+ orderaccname +`</p>
+                                                <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">Rp `+ order.totalPrice +`</td>
+                                        <td class="px-4 py-3 text-xs">
+                                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> `+ order.status +` </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">`+ time +`</td>
+                                    </tr>
+                                `)
+                            });
+                        }).catch((reason) => alert(reason))
+                        
                     } else {
                         $('#account').replaceWith(`<th id="account" class="px-4 py-3">Buyer</th>`)
-                        loadOrdersBySeller().then((response) => orders).catch((reason) => alert(reason))
-                        orders.sort((a,b) => b.orderTime - a.orderTime)
-                        orderacc = "Buyer"
-                        console.log("dari seller", orders)
+                        loadOrdersBySeller().then((response) => {
+                            if (response.length === 0){
+                                console.log(response)
+                                $('#orderkosong').show()
+                                $('#orderlist').hide()
+                            } else{
+                                console.log(response)
+                                $('#orderlist').show()
+                                $('#orderkosong').hide();
+                            }
+                            response.sort((a,b) => b.orderTime - a.orderTime)
+                            orderacc = "Buyer"
+                            console.log(JSON.stringify(response))
+                            response.forEach(order => {
+                                let orderaccname = ""
+                                let time = order.orderTime
+                                time.pop()
+                                time = time.join(" ")
+                                if (userRole === "buyer"){orderaccname = order.seller.name}
+                                else{orderaccname = order.buyer.name}
+                                $('#isi').append(`
+                                    <tr onclick="() => {
+                                        localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
+                                        location.href = 'orderdetail.html'
+                                    }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
+                                        <td class="px-4 py-3">
+                                            <input readonly hidden id="orderId" type="number" value=`+ order.id +`/>
+                                            <div class="flex items-center text-sm">
+                                                <div>
+                                                <p class="font-semibold">`+ orderaccname +`</p>
+                                                <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">Rp `+ order.totalPrice +`</td>
+                                        <td class="px-4 py-3 text-xs">
+                                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> `+ order.status +` </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm">`+ time +`</td>
+                                    </tr>
+                                `)
+                            });
+                        }).catch((reason) => alert(reason))
                     }
-
-                    if (orders.length === 0){
-                        console.log(orders)
-                        $('#orderkosong').show()
-                        // $('#orderlist').hide()
-                    } else{
-                        console.log(orders)
-                        $('#orderlist').show()
-                        $('#orderkosong').hide();
-                    }
-                    
-                    orders.forEach(order => {
-                        let orderaccname = ""
-                        var time = new Date((order.orderTime).toString())
-                        if (userRole === "buyer"){orderaccname = order.seller.name}
-                        else{orderaccname = order.buyer.name}
-                        $('tbody').append(`
-                            <tr onclick="() => {
-                                localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
-                                location.href = 'orderdetail.html'
-                            }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
-                                <td class="px-4 py-3">
-                                    <input readonly hidden id="orderId" type="number" value=`+ order.id +`/>
-                                    <div class="flex items-center text-sm">
-                                        <div>
-                                        <p class="font-semibold">`+ orderaccname +`</p>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm">Rp `+ order.totalPrice +`</td>
-                                <td class="px-4 py-3 text-xs">
-                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> `+ order.status +` </span>
-                                </td>
-                                <td class="px-4 py-3 text-sm">`+ time +`</td>
-                            </tr>
-                        `)
-                    });
                 } else {
                     $('#logoutbtn').hide();
                     $('#profilebtn').hide();

@@ -92,10 +92,12 @@
     <script>
         (function () {
             loadLoginData()
-
+            let userData = JSON.parse(localStorage.getItem('tokenData'))
+            let userRole = userData.type
             if (getLoggedInStatus()) {
                 $('#signupbtn').hide();
                 $('#loginbtn').hide();
+                if (userRole === "seller"){$('#checkoutbtn').hide()}
             } else {
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();

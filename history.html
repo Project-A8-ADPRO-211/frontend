@@ -104,11 +104,12 @@
         <script>
             (function () {
                 loadLoginData()
-
+                let userData = JSON.parse(localStorage.getItem('tokenData'))
+                let userRole = userData.type
                 if(getLoggedInStatus()) {
                     $('#signupbtn').hide();
                     $('#loginbtn').hide();
-
+                    if (userRole === "seller"){$('#checkoutbtn').hide()}
                     getTransactionData().then((response) => {
                         console.log(response)
                         if (response.length === 0) $('#walletText').append("<h3>There's no transaction yet</h3>")
