@@ -181,7 +181,7 @@ function renderChatRoom() {
                 } else if (!b?.lastSentMessage?.timeStamp) {
                     return 1
                 } else {
-                    return a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp
+                    return -1 * (a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp)
                 }
             })
 
@@ -215,7 +215,7 @@ function renderNewChatRoom(destId) {
                 } else if (!b?.lastSentMessage?.timeStamp) {
                     return 1
                 } else {
-                    return a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp
+                    return -1 * (a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp)
                 }
             })
 
