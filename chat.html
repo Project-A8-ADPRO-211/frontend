@@ -105,8 +105,9 @@
             window.addEventListener("message", (event) => {
                 if (event?.data?.cmd === "new") {
                     createRoom(event?.data?.destination).then(() => {
-                        renderChatRoom().then(html => {
+                        renderNewChatRoom(event?.data?.destination).then((html, newRoomId) => {
                             chatRoomList.html(html);
+                            handleOpenRoom(newRoomId);
                         })
                     });
                 }
@@ -130,6 +131,9 @@
             setInterval(function() {
                 renderChatRoom().then(html => {
                     chatRoomList.html(html);
+                    if (currentRoomId) {
+                        jQuery('#room-'+currentRoomId).addClass("active_chat")
+                    }
                 })
             }, 5000);
 
