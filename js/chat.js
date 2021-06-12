@@ -92,7 +92,7 @@ function renderChatList(recipient, lastDate, lastMsg, roomId) {
     return `                <div class="chat_list" onclick="handleOpenRoom(${roomId})" id="room-${roomId}">
                                 <div class="chat_people">
                                     <div class="chat_ib">
-                                        <h5>${recipient} <span class="chat_date">${parseTimeStamp(lastDate)}</span></h5>
+                                        <h5>${recipient} <span class="chat_date">${lastDate ? parseTimeStamp(lastDate) : "-"}</span></h5>
                                         <p>${lastMsg}</p>
                                     </div>
                                 </div>

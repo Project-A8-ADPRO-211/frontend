@@ -47,6 +47,11 @@ function removeToken() {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenData");
     loginState = false;
+    $('#orderbtn').hide();
+    $('#checkoutbtn').hide();
+    $('#profilebtn').hide();
+    $('#walletbtn').hide();
+    $('#logoutbtn').hide();
 }
 
 function logout() {
@@ -75,6 +80,9 @@ function loadLoginData() {
     } else {
         return removeToken();
     }
+    $('#signupbtn').hide();
+    $('#loginbtn').hide();
+
 }
 
 
