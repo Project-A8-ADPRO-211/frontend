@@ -157,6 +157,7 @@
                                 $('#orderlist').hide()
                             } else{
                                 console.log("else", response)
+                                localStorage.removeItem('order_id')
                                 $('#orderlist').show()
                                 $('#orderkosong').hide();
                             }
@@ -175,11 +176,11 @@
                                 else{orderaccname = order.buyer.name}
                                 $('#isi').append(`
                                     <tr onclick="() => {
-                                        localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
+                                        localStorage.setItem('order_id', $(this).closest('td').find(new Number(('#orderId').val()))
                                         location.href = 'orderdetail.html'
                                     }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
                                         <td class="px-4 py-3">
-                                            <input readonly hidden id="orderId" type="number" value=`+ order.id +`/>
+                                            <input readonly hidden id="orderId`+ order.id +`" type="text" value=`+ order.id +`/>
                                             <div class="flex items-center text-sm">
                                                 <div>
                                                 <p class="font-semibold">`+ orderaccname +`</p>
@@ -221,11 +222,11 @@
                                 else{orderaccname = order.buyer.name}
                                 $('#isi').append(`
                                     <tr onclick="() => {
-                                        localStorage.setItem('order_id', $(this).closest('td').find('#orderId').val())
+                                        localStorage.setItem('order_id', $(this).closest('td').find(new Number(('#orderId').val()))
                                         location.href = 'orderdetail.html'
                                     }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
                                         <td class="px-4 py-3">
-                                            <input readonly hidden id="orderId" type="number" value=`+ order.id +`/>
+                                            <input readonly hidden id="orderId`+ order.id +`" type="text" value=`+ order.id +`/>
                                             <div class="flex items-center text-sm">
                                                 <div>
                                                 <p class="font-semibold">`+ orderaccname +`</p>
