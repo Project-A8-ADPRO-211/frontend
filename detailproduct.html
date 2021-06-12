@@ -214,7 +214,7 @@
             }
 
             function openChatWindow() {
-                openChatWindowReal(product?.ownerAccount?.id);
+                openChatWindowReal(product.ownerAccount.id);
             }
 
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
@@ -367,10 +367,9 @@
                                                 <a onClick={removeFromCart} id="removebtn" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-red-500 text-red-500 hover:text-red-500 hover:no-underline hover:shadow-lg text-center">
                                                     Keluarkan dari Keranjang
                                                 </a>
-                                                [user?.id !== product?.ownerAccount?.id ?
-                                                    <a onClick={openChatWindow} id={"chatBtn"} className={"px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center"}>
+                                                <a onClick={openChatWindow} id={"chatBtn"} className={"px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center"}>
                                                     Chat Penjual
-                                                </a>: ""]
+                                                </a>
                                             </div>
                                         )}
                                     </div>
