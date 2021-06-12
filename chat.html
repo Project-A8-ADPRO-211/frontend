@@ -105,9 +105,9 @@
             window.addEventListener("message", (event) => {
                 if (event?.data?.cmd === "new") {
                     createRoom(event?.data?.destination).then(() => {
-                        renderNewChatRoom(event?.data?.destination).then((html, newRoomId) => {
-                            chatRoomList.html(html);
-                            handleOpenRoom(newRoomId);
+                        renderNewChatRoom(event?.data?.destination).then(data => {
+                            chatRoomList.html(data.html);
+                            handleOpenRoom(data.newRoom);
                         })
                     });
                 }

@@ -233,7 +233,7 @@ function renderNewChatRoom(destId) {
                 if (obj?.lastSentMessage)  htmlData += renderChatList(recipient, obj?.lastSentMessage?.timeStamp, obj?.lastSentMessage?.message, obj?.id);
                 else htmlData += renderChatList(recipient, "-", "No Message Yet", obj?.id);
             }
-            resolve(htmlData, newRoomId);
+            resolve({"html":htmlData, "newRoom": newRoomId});
         })
 
     })
