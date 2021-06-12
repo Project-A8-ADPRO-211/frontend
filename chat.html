@@ -127,6 +127,12 @@
                 }
             })
 
+            setInterval(function() {
+                renderChatRoom().then(html => {
+                    chatRoomList.html(html);
+                })
+            }, 5000);
+
 
 
             function refreshMsg() {
