@@ -287,6 +287,8 @@
             function cekQty(){
                 if ($('#quantity').val() === "" || $('#quantity').val() < 1) return "qty";
                 else if($('#quantity').val() > product.stock) return "stock";
+            function openChatWindow() {
+                openChatWindowReal(product.ownerAccount.id);
             }
 
             const testing = !!(location.href.includes("localhost") || location.href.includes("127.0.0.1"))
@@ -448,7 +450,9 @@
                                                 <a onClick={removeFromCart} id="removebtn" className="px-6 py-2 lg:py-3 text-base rounded-xl border-2 border-red-500 text-red-500 hover:text-red-500 hover:no-underline hover:shadow-lg text-center cursor-pointer">
                                                     Keluarkan dari Keranjang
                                                 </a>
-                                                
+                                                <a onClick={openChatWindow} id={"chatBtn"} className={"px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center"}>
+                                                    Chat Penjual
+                                                </a>
                                             </div>
                                         )}
                                     </div>
@@ -473,7 +477,7 @@
                                         </a>
                                     )}
                                 </div>
-                                
+
                                 <div className="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
                             </div>
                         </div>
