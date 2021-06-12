@@ -50,7 +50,12 @@ function loadOrdersbySeller(){
     })
 }
 
-function createOrder(seller_id){
+function postOrder(seller_id){
+    let payloadObj = {
+        "idSeller": Number(seller_id)
+    }
+    let payloadJson = JSON.stringify(payloadObj)
+    let requestStatus = 0
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/checkout", {
             "method": "POST",
@@ -58,9 +63,42 @@ function createOrder(seller_id){
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + getToken()
             },
-            "body": {
-                "idSeller": seller_id
-            }
+            "body": payloadJson
+        })
+            .then(response => {
+                requestStatus = response.status
+                console.log("req status:", requestStatus)
+                console.log(response)
+                if (response.status !== 200) {
+                    console.error("Failed")
+                    return reject({'status': requestStatus});
+                }
+                response.json().then(data => {
+                    console.log("req status next:", requestStatus)
+                    console.log(data);
+                    console.log(data.status)
+                    return resolve({'status': requestStatus, 'id':data.id});
+                })
+            })
+            .catch(err => {
+                return reject({'error': err});
+            });
+    })
+}
+
+function postItem(order_id, qty, product_id){
+    let payloadObj = {
+        "quantity": Number(qty),
+        "productId": Number(product_id)
+    }
+    let payloadJson = JSON.stringify(payloadObj)
+    return new Promise((resolve, reject) => {
+        fetch(authBaseUrl + "order/" + order_id + "/create-item", {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+            },
+            "body": payloadJson
         })
             .then(response => {
                 if (response.status !== 200) {
@@ -78,31 +116,27 @@ function createOrder(seller_id){
     })
 }
 
-function postItem(order_id, qty, product_id){
+function getOrderById(orderId){
     return new Promise((resolve, reject) => {
-        fetch(authBaseUrl + "order/" + order_id + "/create-item", {
-            "method": "POST",
+        fetch(authBaseUrl + "order/" + orderId, {
+            "method": "GET",
             "headers": {
                 "Content-Type": "application/json",
-            },
-            "body": {
-                "quantity":qty,
-                "productId":product_id
             }
         })
-            .then(response => {
-                if (response.status !== 200) {
-                    console.error("Failed")
-                    return reject({'status': response.status});
-                }
-                response.json().then(response => {
-                    console.log(response);
-                    return resolve({'status': response.status});
-                })
+        .then(response => {
+            if (response.status !== 200) {
+                console.error("Failed")
+                return PromiseRejectionEvent({'status':response.status});
+            }
+            response.json().then(response => {
+                console.log(response);
+                return resolve(response);
             })
+        })
             .catch(err => {
-                return reject({'error': err});
-            });
+                return reject({'error':err});
+            })
     })
 }
 

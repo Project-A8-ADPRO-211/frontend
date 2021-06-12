@@ -84,48 +84,75 @@
         </div>
     </nav>
 
-    <!-- Page content using react-->
-    <main>
+    <main class="mb-8">
         <div class="container mx-auto mt-24">
             <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center md:items-start justify-between">
                 <div class="flex flex-col items-center md:items-start">
-                    <h1 class="mb-2 text-3xl sm:text-4xl">Checkout Order</h1>
+                    <h1 class="mb-2 text-3xl sm:text-4xl">Checkout Summary</h1>
                     <div class="w-5/6 bg-purple-500 px-3 h-1 rounded-xl" />
                 </div>
             </div>
         </div>
-        <div class="mx-auto mt-20 flex flex-col justify-center align-center container">
-        <form class="container mx-auto mt-4 mb-8">
-            <div class="w-full flex flex-col space-y-8 rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
-                <div class="flex space-around item bg-gray-100 h-10 items-center">
-                    <h4>Nama</h4>
-                    <h4>Harga</h4>
-                    <h4>Seller</h4>
-                    <h4>Jumlah</h4>
+        <div id="cartkosong" class="mt-4 mx-4">
+            <p class="lg:text-xl font-bold md:text-base">Keranjang Order masih kosong</p>
+            <p class="lg:text-base md:text-sm">Silahkan membeli produk atau tambah produk ke keranjang</p>
+        </div>
+        <div id="keranjang" class="container w-full flex flex-col mt-12 mx-auto space-y-4 min-h-0 sm:h-auto md:min-h-full rounded-2xl border-2 border-purple-500 p-7 sm:p-12">
+            <!-- <div id="sellerSum" class="flex flex-col">
+                <div id="dataseller" class="w-full flex flex-row space-x-4" >
+                    <div class="flex-grow""><h3 class="text-xl font-bold">Umji</h3></div>
                 </div>
-                <div class="flex space-evenly item bg-gray-100 h-10 items-center">
-                    <p>Ramen</p>
-                    <p>Rp 5000</p>
-                    <p>Umji</p>
-                    <input type="number" id="quantity">
+                <div id="datapesanan">
+                    <p>Items:</p>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Sate ayam x2</p>
+                        <p class="font-semibold">Rp 20000</p>
+                    </span>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Ramyeon x4</p>
+                        <p><strong>Rp 60000</strong></p>
+                    </span>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Bakso malang x1</p>
+                        <p><strong>Rp 10000</strong></p>
+                    </span>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Bibimbap x1</p>
+                        <p><strong>Rp 12000</strong></p>
+                    </span>
                 </div>
-                <div class="flex space-evenly item bg-gray-100 h-10 items-center">
-                    <p>Dokebi</p>
-                    <p>Rp 2500</p>
-                    <p>Pram</p>
-                    <input type="number" id="quantity">
-                </div>
-                <div class="flex space-evenly item bg-gray-100 h-10 items-center">
-                    <p>Siomay</p>
-                    <p>Rp 2000</p>
-                    <p>Umji</p>
-                    <input type="number" id="quantity">
-                </div>
+                <div id="totalharga" class="my-4 text-md text-right"><p class="font-bold">Total: Rp 102000</p></div>
+                <hr class="bg-gray-400">
             </div>
-            <div class="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-4 md:space-y-0 items-center justify-center pt-6">
-                <button class="px-6 py-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Checkout</button>
-            </div>
-        </form>
+            <div id="sellerSum" class="flex flex-col">
+                <div id="dataseller" class="w-full flex flex-row space-x-4" >
+                    <div class="flex-grow""><h3 class="text-xl font-bold">Umji</h3></div>
+                </div>
+                <div id="datapesanan">
+                    <p>Items:</p>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Sate ayam x2</p>
+                        <p class="font-semibold">Rp 20000</p>
+                    </span>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Ramyeon x4</p>
+                        <p><strong>Rp 60000</strong></p>
+                    </span>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Bakso malang x1</p>
+                        <p><strong>Rp 10000</strong></p>
+                    </span>
+                    <span class="flex flex-row md:text-base sm:text-sm">
+                        <p class="flex-grow">Bibimbap x1</p>
+                        <p><strong>Rp 12000</strong></p>
+                    </span>
+                </div>
+                <div id="totalharga" class="my-4 text-md text-right"><p class="font-bold">Total: Rp 102000</p></div>
+                <hr class="bg-gray-400">
+            </div> -->
+            <!-- <div class="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-4 md:space-y-0 items-center justify-center pt-6">
+                <button onclick="" id="postorder" class="px-6 py-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Checkout</button>
+            </div> -->
         </div>
     </main>
 
@@ -145,10 +172,138 @@
     <script>
         (function () {
             loadLoginData()
-
+            const userData = JSON.parse(localStorage.getItem("tokenData"))
+            let userRole = userData.type
+            console.log(userRole)
+            let totalEach = []
+            let cartlama = []
+            let cartbaru = []
             if (getLoggedInStatus()) {
+                $('#cartkosong').hide() // delete this
                 $('#signupbtn').hide();
                 $('#loginbtn').hide();
+                if (userRole === "seller"){$('#checkoutbtn').hide()}
+    
+                cartlama = JSON.parse(localStorage.getItem("cart"))
+                console.log("cartlama:",JSON.stringify(cartlama))
+                if (cartlama === null || cartlama.length === 0){
+                    $('#keranjang').hide()
+                    $('#cartkosong').show()
+                } else{
+                    $('#cartkosong').hide()
+                    $('#keranjang').show()
+
+                    if (cartlama.length === 1){
+                        cartbaru = [cartlama]
+                        totalEach.push(cartlama[0]["price"])
+                    }
+                    else{
+                        let temp = []
+                        let tempHarga = 0
+                        let pinIndex = 0
+                        while(cartlama.length !== 0){
+                            temp = []
+                            tempHarga = cartlama[0]["price"]
+                            pinIndex = cartlama[0]
+                            temp.push(pinIndex)
+                            for (let i = 1; i < cartlama.length; i++){
+                                if (cartlama[i]["idSeller"] === pinIndex["idSeller"]){
+                                    temp.push(cartlama[i])
+                                    tempHarga += cartlama[i]["price"]
+                                }
+                            }
+                            cartbaru.push(temp)
+                            totalEach.push(tempHarga)
+                            console.log(tempHarga)
+                            cartlama = cartlama.filter(item => item["idSeller"] !== pinIndex["idSeller"])
+                        }
+                        console.log("cartlama after:", JSON.stringify(cartlama))
+                    } console.log("cartbaru:",JSON.stringify(cartbaru))
+                    console.log(JSON.stringify(totalEach))
+                    // tinggal append ke html dan API call (post order dan post item) disini
+                    let counter = 0
+                    cartbaru.forEach(list => {
+                        console.log("tulis nama seller")
+                        console.log("list:", JSON.stringify(list))
+                        $('#keranjang').append(`
+                            <div id="sellerSum`+ counter +`" class="flex flex-col">
+                                <div id="dataseller`+ counter +`" class="w-full flex flex-row space-x-4" >
+                                    <div class="flex-grow""><h3 class="text-xl font-bold">`+ list[0]["sellerName"] +`</h3></div>
+                                </div>
+                                <div id="datapesanan`+ counter +`">
+                                    <p>Items:</p>
+                                </div>
+                            </div>
+                        `)
+                        let pesananId = "#datapesanan"+counter
+                        list.forEach(item => {
+                            console.log("tulis masing2 item")
+                            console.log("item", JSON.stringify(item))
+                            console.log(item.name + item.quantity)
+                            $(pesananId).append(`
+                                <span class="flex flex-row md:text-base sm:text-sm">
+                                    <p class="flex-grow">`+ item.name +` x`+ item.quantity +`</p>
+                                    <p class="font-semibold">Rp `+ item.price +`</p>
+                                </span>
+                            `)
+                        });
+                        console.log("tulis total harganya")
+                        $('#sellerSum'+counter).append(`
+                            <div id="totalharga`+ counter +`" class="my-4 text-md text-right"><p class="font-bold">Total: Rp `+ totalEach[counter] +`</p></div>
+                            <hr class="bg-gray-400">
+                        `)
+                        counter += 1
+                    });
+                    $('#keranjang').append(`
+                        <div class="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-4 md:space-y-0 items-center justify-center pt-6">
+                            <button id="postorder" class="px-6 py-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full md:w-auto text-center" type="submit">Checkout</button>
+                        </div>
+                    `)
+                }
+                $('#postorder').on('click', function(event){
+                    event.preventDefault()
+                    if (!(localStorage.getItem('cart') === null || localStorage.getItem('cart') === "[]")){
+                        Swal.fire({
+                            title: 'Sedang mengirim order anda',
+                            text: 'Mohon menunggu',
+                            allowOutsideClick: false,
+                            didOpen: () => { Swal.showLoading() }
+                        }) 
+                        cartbaru.forEach(order => {
+                            let hasil = []
+                            postOrder(order[0]["idSeller"])
+                            .then((response) => { 
+                                console.log("di html:", response.status)
+                                if (response.status !== 200) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                console.log(JSON.stringify(response))
+                                order.forEach(item => {
+                                    postItem(response.id, item["quantity"], item["productId"])
+                                    .then(data => {console.log(JSON.stringify(data)) 
+                                    console.log("berhasil item")})
+                                    .catch(reason => alert(reason))
+                                });
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Order anda berhasil dibuat',
+                                    text: 'Anda akan dialihkan ke halaman order list',
+                                    showConfirmButton: false
+                                })
+                                // setInterval(function () { location.href = 'order_list.html' }, 2000)
+                            }).catch((reason) => {
+                                //alert(reason)
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi kesalahan',
+                                    text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
+                                })
+                            })
+                        });
+                    }
+                })
             } else {
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();
@@ -159,20 +314,6 @@
             $('#logoutbtn').on("click", function (e) {
                 logout();
             })
-            let products = []
-            let cart = []
-            cart = JSON.parse(localStorage.getItem("cart"))
-            if (localStorage.getItem("cart") !== null){
-                cart.forEach(productId => {
-                    fetch(authBaseUrl + "product/" + productId)
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data)
-                            products.push(data)
-                        })
-                });
-                
-            }
         })()
     </script>
 </body>

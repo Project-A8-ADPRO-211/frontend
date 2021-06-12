@@ -115,10 +115,13 @@
     <script>
         (function () {
             loadLoginData()
-
+            let userData = JSON.parse(localStorage.getItem('tokenData'))
+            let userRole = "not logged in"
+            if (userData !== null) userRole = userData.type
             if (getLoggedInStatus()) {
                 $('#signupbtn').hide();
                 $('#loginbtn').hide();
+                if (userRole === "seller"){$('#checkoutbtn').hide()}
             } else {
                 $('#walletbtn').hide();
                 $('#logoutbtn').hide();
@@ -130,6 +133,33 @@
             $('#logoutbtn').on("click", function (e) {
                 logout();
             })
+            // let cartlama = [
+            //     {idSeller:"1"},
+            //     {idSeller:"2"},
+            //     {idSeller:"1"},
+            //     {idSeller:"3"},
+            //     {idSeller:"5"},
+            //     {idSeller:"2"},
+            // ]
+            // let cartbaru = []
+            // console.log("lama before:", JSON.stringify(cartlama))
+            // console.log("baru before", JSON.stringify(cartbaru))
+            // let temp = []
+            // let pinIndex = 0
+            // while(cartlama.length !== 0){
+            //     temp = []
+            //     pinIndex = cartlama[0]
+            //     temp.push(pinIndex)
+            //     for (let i = 1; i < cartlama.length; i++){
+            //         if (cartlama[i]["idSeller"] === pinIndex["idSeller"]){
+            //             temp.push(cartlama[i])
+            //         }
+            //     }
+            //     cartbaru.push(temp)
+            //     cartlama = cartlama.filter(item => item["idSeller"] !== pinIndex["idSeller"])
+            // }
+            // console.log("cartlama:", JSON.stringify(cartlama))
+            // console.log("cartbaru", JSON.stringify(cartbaru))
 
         })()
     </script>

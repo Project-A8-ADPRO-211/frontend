@@ -31,6 +31,10 @@
             height: 400px;
             object-fit: cover;
         }
+
+        #quantity{
+            border: 1px solid black;
+        }
     </style>
 </head>
 
@@ -98,10 +102,12 @@
     <script>
         (function () {
             loadLoginData()
-
+            let userData = JSON.parse(localStorage.getItem('tokenData'))
+            let userRole = userData.type
             if (getLoggedInStatus()) {
                 $('#signupbtn').hide();
                 $('#loginbtn').hide();
+                if (userRole === "seller"){$('#checkoutbtn').hide()}
             } else {
                 $('#logoutbtn').hide();
                 $('#profilebtn').hide();
@@ -135,6 +141,20 @@
             const [inCart, setInCart] = useState(false)
             const userData = JSON.parse(localStorage.getItem("tokenData"))
             const tokenAuth = localStorage.getItem("token")
+
+            if (localStorage.getItem("idInCart") !== null){
+                if (JSON.parse(localStorage.getItem("idInCart")).includes(localStorage.getItem("product_id"))){
+                    setInCart(true)
+                }
+            }
+
+            if (inCart){
+                $('#addbtn').hide()
+                $('#removebtn').show()
+            } else{
+                $('#removebtn').hide()
+                $('#addbtn').show()
+            }
 
             console.log(userData)
 
@@ -183,28 +203,63 @@
                 )
             }
 
-            function addToCart(){
-                const productId = localStorage.getItem("product_id")
-                let cart = []
-                if (localStorage.getItem("cart") === null){
-                    cart.push(productId)
-                    localStorage.setItem("cart", JSON.stringify(cart))
-                } else{
-                    cart = JSON.parse(localStorage.getItem("cart"))
-                    cart.push(productId)
-                    localStorage.setItem("cart", JSON.stringify(cart))
+            let item = {
+                    productId: product.id,
+                    name: product.name,
+                    price: 0,
+                    idSeller: 0,
+                    sellerName:"",
+                    quantity: 0
                 }
+                
+            function addToCart(){
+                console.log(localStorage.getItem("cart"))
+                let idInCart = []
+                let cart = []
+                const cartStorage = localStorage.getItem("cart")
+                console.log("sebelum", cartStorage)
+                item["idSeller"] = $('#idSeller').val()
+                item["sellerName"] = $('#sellerName').val()
+                item["quantity"] = $('#quantity').val()
+                item["price"] = product.price * item['quantity']
+                console.log("setelah", localStorage.getItem("cart"))
+                if (cartStorage === null || cartStorage === "[]"){
+                    cart.push(item)
+                    idInCart.push(product.id)
+                } else{
+                    console.log("masuk ke else")
+                    cart = JSON.parse(localStorage.getItem("cart"))
+                    idInCart = JSON.parse(localStorage.getItem("idInCart"))
+                    cart.forEach(itemIn => {
+                        if (itemIn["productId"] !== item["productId"]){
+                            cart.push(item)
+                            idInCart.push(product.id) 
+                        }
+                    });   
+                }
+                localStorage.setItem("cart", JSON.stringify(Array.from(new Set(cart))))
+                localStorage.setItem("idInCart", JSON.stringify(idInCart))
                 setInCart(true)
+                console.log("setelah ditambah:",localStorage.getItem("cart"))
+                console.log("Set:", JSON.stringify(Array.from(new Set(cart))))
+                console.log("idInCart:", localStorage.getItem("idInCart"))
             }
 
             function removeFromCart(){
-                let cart = []
-                cart = JSON.parse(localStorage.getItem("cart"))
-                cart = cart.filter(item => item != localStorage.getItem("product_id"))
+                let cart = JSON.parse(localStorage.getItem("cart"))
+                let idInCart = JSON.parse(localStorage.getItem("idInCart"))
+                cart = cart.filter(itemIn => itemIn["productId"] !== item["productId"])
+                idInCart = idInCart.filter(id => id !== item["productId"])
+                if (cart === "[[]]"){
+                    cart = "[]"
+                }
                 localStorage.setItem("cart", JSON.stringify(cart))
+                localStorage.setItem("idInCart", JSON.stringify(idInCart))
                 $('#removebtn').hide()
                 $('#addcartbtn').show()
                 setInCart(false)
+                console.log("setelah remove:", localStorage.getItem("cart"))
+                console.log("idInCart:", localStorage.getItem("idInCart"))
             }
 
             function hideAddToCart(){
@@ -213,6 +268,25 @@
                 $('#removebtn').show()
             }
 
+            function swalQty(type){
+                if (type === "qty"){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Quantity tidak valid',
+                        text: 'Quantity dari pesanan tidak boleh kurang dari 1'
+                    })
+                } else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Quantity tidak valid',
+                        text: 'Stock produk kurang dari quantity pesanan'
+                    })
+                }
+            }
+
+            function cekQty(){
+                if ($('#quantity').val() === "" || $('#quantity').val() < 1) return "qty";
+                else if($('#quantity').val() > product.stock) return "stock";
             function openChatWindow() {
                 openChatWindowReal(product.ownerAccount.id);
             }
@@ -296,14 +370,6 @@
                 }
             }, [])
 
-            if (inCart){
-                $('#addbtn').hide()
-                $('#removebtn').show()
-            } else{
-                $('#removebtn').hide()
-                $('#addbtn').show()
-            }
-
             console.log("review", review)
 
             return (
@@ -322,7 +388,9 @@
                             <div className="container mx-auto mt-12">
                                 <div className="flex flex-col lg:flex-row items-start space-x-0 lg:space-x-12 space-y-12 lg:space-y-0">
                                     <img src={product.imageUrl === "https://google.com" ? "assets/nothing.svg" : product.imageUrl} alt="gambar makanan" id="image" className="rounded-xl" />
-                                    <div className="flex flex-col space-y-4 lg:pr-12 xl:pr-40 2xl:pr-64">
+                                    <div className="flex flex-col h-auto space-y-4 lg:pr-12 xl:pr-40 2xl:pr-64">
+                                        <input readOnly hidden id="idSeller" type="text" value={product.ownerAccount.id}/>
+                                        <input readOnly hidden id="sellerName" type="text" value={toTitleCase(product.ownerAccount.name)}/>
                                         <p className="text-4xl font-bold text-purple-500">{toTitleCase(product.name)}</p>
                                         <p className="text-2xl font-bold">Rp. {product.price}</p>
                                         <p className="text-lg font-semibold text-gray-400">Produk oleh : {product.ownerAccount.name}</p>
@@ -347,24 +415,39 @@
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div className="pt-7 font-semibold text-white flex flex-col space-y-6 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-6">
+                                            <div className="pt-7 font-semibold text-white flex flex-col flex-wrap space-y-6 xl:space-y-0 xl:flex-row space-x-0 xl:space-x-6">
+                                                <div className="flex flex-col text-black lg:pl-6">
+                                                    <label htmlFor="quantity">Quantity: </label>
+                                                    <input type="number" id="quantity" name="quantity" min="1" max="9" defaultValue="1"/>
+                                                </div>
+                                                <div className="px-14 py-2 lg:py-3 rounded-xl w-full flex-shrink"></div>
                                                 {product.stock > 0 ? (
                                                     <a onClick={() => {
-                                                        addToCart()
-                                                        location.href = `createorder.html`}
-                                                    } className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center">
+                                                        const tipe = cekQty()
+                                                        if (tipe){
+                                                            swalQty(tipe)
+                                                        } else{
+                                                            addToCart()
+                                                            location.href = `createorder.html`
+                                                    }}} className="px-12 py-2 lg:py-3 text-base rounded-xl bg-purple-500 hover:text-white hover:no-underline hover:shadow-lg text-center cursor-pointer">
                                                         Beli
                                                     </a>
                                                 ) : (
-                                                    <a href="#" className="px-14 py-2 lg:py-3 text-lg rounded-xl bg-gray-400 hover:text-white hover:no-underline hover:shadow-lg text-center">
+                                                    <a href="#" className="px-14 py-2 lg:py-3 text-base rounded-xl bg-gray-400 hover:text-white hover:no-underline hover:shadow-lg text-center">
                                                         Stok Kosong
                                                     </a>
                                                 )}
 
-                                                <a onClick={hideAddToCart} id="addbtn" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center">
+                                                <a onClick={() =>{
+                                                        const tipe = cekQty()
+                                                        if (tipe){
+                                                            swalQty(tipe)
+                                                        } else{
+                                                            hideAddToCart()    
+                                                }}} id="addbtn" className="px-6 py-2 lg:py-3 text-base rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center cursor-pointer">
                                                     Masukkan ke Keranjang
                                                 </a>
-                                                <a onClick={removeFromCart} id="removebtn" className="px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-red-500 text-red-500 hover:text-red-500 hover:no-underline hover:shadow-lg text-center">
+                                                <a onClick={removeFromCart} id="removebtn" className="px-6 py-2 lg:py-3 text-base rounded-xl border-2 border-red-500 text-red-500 hover:text-red-500 hover:no-underline hover:shadow-lg text-center cursor-pointer">
                                                     Keluarkan dari Keranjang
                                                 </a>
                                                 <a onClick={openChatWindow} id={"chatBtn"} className={"px-6 py-2 lg:py-3 text-lg rounded-xl border-2 border-purple-500 text-purple-500 hover:text-purple-500 hover:no-underline hover:shadow-lg text-center"}>

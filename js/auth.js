@@ -52,6 +52,7 @@ function removeToken() {
 function logout() {
     removeToken();
     signOutGoogle();
+    localStorage.setItem("cart", "[]")
     location.reload();
 }
 
