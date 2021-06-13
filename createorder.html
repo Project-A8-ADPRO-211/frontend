@@ -294,9 +294,8 @@
                                     text: 'Anda akan dialihkan ke halaman order list',
                                     showConfirmButton: false
                                 })
-                                // setInterval(function () { location.href = 'order_list.html' }, 2000)
+                                setInterval(function () { location.href = 'order_list.html' }, 2000)
                             }).catch((reason) => {
-                                //alert(reason)
                                 Swal.close()
                                 Swal.fire({
                                     icon: 'error',

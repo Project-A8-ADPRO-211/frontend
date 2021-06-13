@@ -141,7 +141,9 @@
             (function () {
                 $('#googleSignin').hide();
                 loadLoginData()
-
+                const userData = JSON.parse(localStorage.getItem("tokenData"))
+                let userRole = userData.type
+                if (userRole === "seller"){$('#checkoutbtn').hide()}
                 $('#logoutbtn').on("click", function (e) {
                     logout();
                 })

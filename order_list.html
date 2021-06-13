@@ -222,12 +222,12 @@
                                 else{orderaccname = order.buyer.name}
                                 $('#isi').append(`
                                     <tr onclick="localStorage.setItem('order_id', `+ order.id +`); location.href = 'orderdetail.html'"
-                                        class="bg-gray-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
+                                        class="bg-gray-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 shadow-inner hover:shadow-lg cursor-pointer">
                                         <td class="px-4 py-3">
                                             <input readonly hidden id="orderId`+ order.id +`" type="text" value=`+ order.id +`/>
                                             <div class="flex items-center text-sm">
                                                 <div>
-                                                <p class="font-semibold">`+ orderaccname +`</p>
+                                                <p class="font-semibold">`+ toTitleCase(orderaccname) +`</p>
                                                 <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
                                                 </div>
                                             </div>

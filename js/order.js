@@ -25,7 +25,7 @@ function loadOrdersByBuyer(){
     })
 }
 
-function loadOrdersbySeller(){
+function loadOrdersBySeller(){
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/all?strategy=seller", {
             "method": "GET",
@@ -141,6 +141,7 @@ function getOrderById(orderId){
 }
 
 function confirmOrder(order_id){
+    let requestStatus = 0
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/" + order_id + "/confirm", {
             "method": "PUT",
@@ -150,13 +151,14 @@ function confirmOrder(order_id){
             }
         })
             .then(response => {
+                requestStatus = response.status
                 if (response.status !== 200) {
                     console.error("Failed")
-                    return reject({'status': response.status});
+                    return reject({'status': requestStatus});
                 }
-                response.json().then(response => {
-                    console.log(response);
-                    return resolve({'status': response.status});
+                response.json().then(data => {
+                    console.log(data);
+                    return resolve({'status': requestStatus, 'id': data.id});
                 })
             })
             .catch(err => {
@@ -166,6 +168,7 @@ function confirmOrder(order_id){
 }
 
 function cancelOrder(order_id){
+    let requestStatus = 0
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/" + order_id + "/cancel", {
             "method": "PUT",
@@ -175,13 +178,14 @@ function cancelOrder(order_id){
             }
         })
             .then(response => {
+                requestStatus = response.status
                 if (response.status !== 200) {
                     console.error("Failed")
-                    return reject({'status': response.status});
+                    return reject({'status': requestStatus});
                 }
-                response.json().then(response => {
-                    console.log(response);
-                    return resolve({'status': response.status});
+                response.json().then(data => {
+                    console.log(data);
+                    return resolve({'status': requestStatus, 'id': data.id});
                 })
             })
             .catch(err => {
@@ -191,6 +195,7 @@ function cancelOrder(order_id){
 }
 
 function shipOrder(order_id){
+    let requestStatus = 0
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/" + order_id + "/ship", {
             "method": "PUT",
@@ -200,13 +205,14 @@ function shipOrder(order_id){
             }
         })
             .then(response => {
+                requestStatus = response.status
                 if (response.status !== 200) {
                     console.error("Failed")
-                    return reject({'status': response.status});
+                    return reject({'status': requestStatus});
                 }
-                response.json().then(response => {
-                    console.log(response);
-                    return resolve({'status': response.status});
+                response.json().then(data => {
+                    console.log(data);
+                    return resolve({'status': requestStatus, 'id': data.id});
                 })
             })
             .catch(err => {
@@ -216,6 +222,7 @@ function shipOrder(order_id){
 }
 
 function deliverOrder(order_id){
+    let requestStatus = 0
     return new Promise((resolve, reject) => {
         fetch(authBaseUrl + "order/" + order_id + "/deliver", {
             "method": "PUT",
@@ -225,13 +232,14 @@ function deliverOrder(order_id){
             }
         })
             .then(response => {
+                requestStatus = response.status
                 if (response.status !== 200) {
                     console.error("Failed")
-                    return reject({'status': response.status});
+                    return reject({'status': requestStatus});
                 }
-                response.json().then(response => {
-                    console.log(response);
-                    return resolve({'status': response.status});
+                response.json().then(data => {
+                    console.log(data);
+                    return resolve({'status': requestStatus, 'id': data.id});
                 })
             })
             .catch(err => {
