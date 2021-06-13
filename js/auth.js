@@ -6,6 +6,8 @@ let loginState = false;
 let loginAccType = "";
 let userUID;
 
+let firstLoad = true;
+
 function signOutGoogle() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
@@ -45,6 +47,11 @@ function removeToken() {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenData");
     loginState = false;
+    $('#orderbtn').hide();
+    $('#checkoutbtn').hide();
+    $('#profilebtn').hide();
+    $('#walletbtn').hide();
+    $('#logoutbtn').hide();
 }
 
 function logout() {
@@ -64,8 +71,27 @@ function loadLoginData() {
         loginAccType = tokenData["type"];
         userUID = tokenData["sub"]
         loginState = true;
+        if (firstLoad && !location.href.includes("chat")) {
+            jQuery('body').append("    <a onclick=\"openChatWindowReal()\" class=\"float-container bg-purple-500 hover:no-underline\">\n" +
+                "        <i class=\"icon-chat float-btn\"><span class=\"font-medium\">chat</span></i>\n" +
+                "    </a>")
+            firstLoad = false;
+        }
     } else {
         return removeToken();
+    }
+    $('#signupbtn').hide();
+    $('#loginbtn').hide();
+
+}
+
+
+function openChatWindowReal(productId) {
+    const chatWindow = window.open("chat.html", "Chat", "menubar=no,width=1142,height=706");
+    if (productId != null) {
+        setTimeout(function () {
+            chatWindow.postMessage({"cmd": "new", "destination": productId});
+        }, 1000);
     }
 }
 
