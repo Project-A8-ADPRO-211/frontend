@@ -10010,11 +10010,10 @@ h3 {
 /*Floating Chat Button*/
 @font-face {
   font-family: 'icomoon';
-  src:  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.eot?xqqx08');
-  src:  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.eot?xqqx08#iefix') format('embedded-opentype'),
-  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.ttf?xqqx08') format('truetype'),
-  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.woff?xqqx08') format('woff'),
-  url('https://i.icomoon.io/public/temp/f75a82ee13/UntitledProject/icomoon.svg?xqqx08#icomoon') format('svg');
+  src:  url('../assets/icons/icomoon.eot');
+  url('../assets/icons/icomoon.ttf') format('truetype'),
+  url('../assets/icons/icomoon..woff') format('woff'),
+  url('../assets/icons/icomoon.svg') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
