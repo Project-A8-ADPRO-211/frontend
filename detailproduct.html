@@ -284,9 +284,10 @@
                 }
             }
 
-            function cekQty(){
+            function cekQty() {
                 if ($('#quantity').val() === "" || $('#quantity').val() < 1) return "qty";
-                else if($('#quantity').val() > product.stock) return "stock";
+                else if ($('#quantity').val() > product.stock) return "stock";
+            }
             function openChatWindow() {
                 openChatWindowReal(product.ownerAccount.id);
             }

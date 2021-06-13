@@ -181,7 +181,7 @@ function renderChatRoom() {
                 } else if (!b?.lastSentMessage?.timeStamp) {
                     return 1
                 } else {
-                    return a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp
+                    return -1 * (a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp)
                 }
             })
 
@@ -197,6 +197,43 @@ function renderChatRoom() {
                 else htmlData += renderChatList(recipient, "-", "No Message Yet", obj?.id);
             }
             resolve(htmlData);
+        })
+
+    })
+}
+
+function renderNewChatRoom(destId) {
+    return new Promise((resolve, reject) => {
+        getRoomList().then(data => {
+            roomData = {};
+            let htmlData = "";
+            let newRoomId = -1;
+
+            data.sort(function (a,b) {
+                if (!a?.lastSentMessage?.timeStamp) {
+                    return -1
+                } else if (!b?.lastSentMessage?.timeStamp) {
+                    return 1
+                } else {
+                    return -1 * (a?.lastSentMessage?.timeStamp - b?.lastSentMessage?.timeStamp)
+                }
+            })
+
+            for(let i = 0; i < data.length; i++) {
+                const obj = data[i];
+                let recipient = "";
+                if (obj?.participantA?.id == getUserUid()) recipient = obj?.participantB?.name;
+                else recipient = obj?.participantA?.name;
+
+                if (obj?.participantB?.id == destId || obj?.participantA?.id == destId) {
+                    newRoomId = obj.id;
+                }
+                roomData[obj.id] = obj;
+
+                if (obj?.lastSentMessage)  htmlData += renderChatList(recipient, obj?.lastSentMessage?.timeStamp, obj?.lastSentMessage?.message, obj?.id);
+                else htmlData += renderChatList(recipient, "-", "No Message Yet", obj?.id);
+            }
+            resolve({"html":htmlData, "newRoom": newRoomId});
         })
 
     })
