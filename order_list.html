@@ -97,23 +97,8 @@
                                 <th class="px-4 py-3">Waktu Order</th>
                             </tr>
                         </thead>
-                        <tbody id="isi" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr onclick="location.href = 'orderdetail.html'" id="r1" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
-                                <td class="px-4 py-3">
-                                <div class="flex items-center text-sm">
-                                    <div>
-                                    <p class="font-semibold">Umji</p>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
-                                    </div>
-                                </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm">Rp 25000</td>
-                                <td class="px-4 py-3 text-xs">
-                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> Open </span>
-                                </td>
-                                <td class="px-4 py-3 text-sm">08-06-2021 17:43</td>
-                            </tr>
-                        </tbody>
+                        <!-- list order here -->
+                        <tbody id="isi" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"></tbody> 
                     </table>
                 </div>
             </div>
@@ -135,13 +120,22 @@
         <!-- Core theme JS-->
         <script>
             (function () {
-                setTimeout(function () {
-                    $('#r1').show();
-                }, 1291)
+                // setTimeout(function () {
+                //     $('#r1').show();
+                // }, 1291)
                 loadLoginData()
                 const userData = JSON.parse(localStorage.getItem("tokenData"))
                 let userRole = userData.type
                 console.log(userRole)
+
+                function toTitleCase(str) {
+                    return str.replace(
+                        /\w\S*/g,
+                        function (txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                        }
+                    )
+                }
 
                 let orderacc = ""
                 if (getLoggedInStatus()) {
@@ -165,25 +159,24 @@
                             orderacc = "Seller"
                             
                             console.log(JSON.stringify(response))
-                            console.log("1:", JSON.stringify(response[0]))
                             response.forEach(order => {
                                 let orderaccname = ""
-                                let time = order.orderTime
-                                time.pop()
-                                time = time.join(" ")
-                                
+                                let date = order.orderTime
+                                date.pop()
+                                let time = [...date].slice(3, date.length)
+                                date = date.reverse().splice(3)
+                                date = date.join("-")   // date of order
+                                time = time.join(":")   // time of order
                                 if (userRole === "buyer"){orderaccname = order.seller.name}
                                 else{orderaccname = order.buyer.name}
                                 $('#isi').append(`
-                                    <tr onclick="() => {
-                                        localStorage.setItem('order_id', $(this).closest('td').find(new Number(('#orderId').val()))
-                                        location.href = 'orderdetail.html'
-                                    }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
+                                    <tr onclick="localStorage.setItem('order_id', `+ order.id +`); location.href = 'orderdetail.html'" 
+                                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 dark:text-gray-400 shadow-inner hover:shadow-lg cursor-pointer">
                                         <td class="px-4 py-3">
                                             <input readonly hidden id="orderId`+ order.id +`" type="text" value=`+ order.id +`/>
                                             <div class="flex items-center text-sm">
                                                 <div>
-                                                <p class="font-semibold">`+ orderaccname +`</p>
+                                                <p class="font-semibold">`+ toTitleCase(orderaccname) +`</p>
                                                 <p class="text-xs text-gray-600 dark:text-gray-400">Seller</p>
                                                 </div>
                                             </div>
@@ -192,7 +185,7 @@
                                         <td class="px-4 py-3 text-xs">
                                         <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> `+ order.status +` </span>
                                         </td>
-                                        <td class="px-4 py-3 text-sm">`+ time +`</td>
+                                        <td class="px-4 py-3 text-sm">`+ date +` `+ time +`</td>
                                     </tr>
                                 `)
                             });
@@ -215,16 +208,18 @@
                             console.log(JSON.stringify(response))
                             response.forEach(order => {
                                 let orderaccname = ""
-                                let time = order.orderTime
-                                time.pop()
-                                time = time.join(" ")
+                                let date = order.orderTime
+                                date.pop()
+                                let time = [...date].slice(3, date.length)
+                                date = date.reverse().splice(3)
+                                date = date.join("-")   // date of order
+                                time = time.join(":")   // time of order
+
                                 if (userRole === "buyer"){orderaccname = order.seller.name}
                                 else{orderaccname = order.buyer.name}
                                 $('#isi').append(`
-                                    <tr onclick="() => {
-                                        localStorage.setItem('order_id', $(this).closest('td').find(new Number(('#orderId').val()))
-                                        location.href = 'orderdetail.html'
-                                    }" style="display: none" class="bg-gra-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
+                                    <tr onclick="localStorage.setItem('order_id', `+ order.id +`); location.href = 'orderdetail.html'"
+                                        class="bg-gray-50 hover:bg-gray-100 text-gray-700 dark:text-gray-400 cursor-pointer">
                                         <td class="px-4 py-3">
                                             <input readonly hidden id="orderId`+ order.id +`" type="text" value=`+ order.id +`/>
                                             <div class="flex items-center text-sm">
@@ -238,7 +233,7 @@
                                         <td class="px-4 py-3 text-xs">
                                         <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"> `+ order.status +` </span>
                                         </td>
-                                        <td class="px-4 py-3 text-sm">`+ time +`</td>
+                                        <td class="px-4 py-3 text-sm">`+ date +` `+ time +`</td>
                                     </tr>
                                 `)
                             });
