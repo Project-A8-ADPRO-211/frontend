@@ -98,8 +98,8 @@
             </div>
             <div id="totalharga" class="text-md text-right"></div>
             <div class="w-full mt-4 bg-gray-400 px-2 h-1 rounded-xl" />
-            <div class="h-12 flex flex-row justify-end space-x-3">
-                <button id="statebtn" class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Open Order</button>
+            <div id="containbtn" class="h-12 flex flex-row justify-end space-x-3">
+                <button id="openbtn" class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Open Order</button>
             </div>
         </div>
     </main>
@@ -139,107 +139,7 @@
                     didOpen: () => { Swal.showLoading() }
                 })
             }
-            function confirm(){
-                confirmOrder($('#orderid').val())
-                .then((response) => { 
-                    console.log("di html:", response.status)
-                    if (response.status !== 200) {
-                        throw new Error('Network response was not ok');
-                    }
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pembayaran berhasil',
-                        text: 'Proses pembayaran berhasil',
-                        showConfirmButton: false
-                    })
-                    setInterval(function () { location.href = 'orderdetail.html' }, 1000)
-                })
-                .catch(reason =>{
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi kesalahan',
-                        text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
-                    })
-                })
-            }
-            function cancel(){
-                cancelOrder($('#orderid').val())
-                .then((response) => { 
-                    console.log("di html:", response.status)
-                    if (response.status !== 200) {
-                        throw new Error('Network response was not ok');
-                    }
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Cancel berhasil',
-                        text: 'Order telah berhasil dicancel',
-                        showConfirmButton: false
-                    })
-                    setInterval(function () { location.href = 'orderdetail.html' }, 1000)
-                })
-                .catch(reason =>{
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi kesalahan',
-                        text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
-                    })
-                })
-            }
-            function ship(){
-                shipOrder($('#orderid').val())
-                .then((response) => { 
-                    console.log("di html:", response.status)
-                    if (response.status !== 200) {
-                        throw new Error('Network response was not ok');
-                    }
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Ship berhasil',
-                        text: 'Order telah berhasil diship',
-                        showConfirmButton: false
-                    })
-                    setInterval(function () { location.href = 'orderdetail.html' }, 1000)
-                })
-                .catch(reason =>{
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi kesalahan',
-                        text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
-                    })
-                })
-            }
-
-            function deliver(){
-                deliverOrder($('#orderid').val())
-                .then((response) => { 
-                    console.log("di html:", response.status)
-                    if (response.status !== 200) {
-                        throw new Error('Network response was not ok');
-                    }
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Delivered',
-                        text: 'Order telah diterima oleh pembeli',
-                        showConfirmButton: false
-                    })
-                    setInterval(function () { location.href = 'orderdetail.html' }, 1000)
-                })
-                .catch(reason =>{
-                    Swal.close()
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi kesalahan',
-                        text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
-                    })
-                })
-            }
+            
             const order_id = localStorage.getItem("order_id")
             let items = []
             let alamat = ""
@@ -281,67 +181,185 @@
                             $('#alamat').replaceWith('<p id="alamat" class="text-md sm:text-sm">Jalan lurus menuju ridhomu ya Allah</p>')
                         }
                     //}
-
+                
                     if (userRole === "buyer"){
                         switch (response.status) {
                             case "Open":
-                                $('#statebtn').replaceWith(`
-                                    <button onclick="() => {loading(); confirm()}" id="statebtn" class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Pay Order</button>
+                                $('#openbtn').replaceWith(`
+                                    <button id="confirmbtn" class="statebtn px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Pay Order</button>
                                 `)
-                                $('#statebtn').parent().append(`
-                                    <button onclick="() => {loading(); cancel()}" id="statebtn" class="px-6 py-2 my-2 text-center bg-red-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Cancel Order</button>
+                                $('#containbtn').append(`
+                                    <button id="cancelbtn" class="statebtn px-6 py-2 my-2 text-center bg-red-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Cancel Order</button>
                                 `)
                                 break;
                             case "Confirmed":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Waiting for seller to ship order</button>
+                                $('.statebtn').replaceWith(`
+                                    <button disabled id="shipbtn" class="statebtn px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Waiting for seller to ship order</button>
                                 `)
                                 break;
                             case "Ship":
-                                $('#statebtn').replaceWith(`
-                                    <button onclick="() => {loading(); deliver()}" id="statebtn" class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Order has arrived</button>
+                                $('#shipbtn').replaceWith(`
+                                    <button id="deliverbtn" class="statebtn px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Order has arrived</button>
                                 `)
                                 break;
                             case "Delivered":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order Complete</button>
+                                $('#deliverbtn').replaceWith(`
+                                    <button disabled id="completebtn" class="statebtn px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order Complete</button>
                                 `)
                                 break;
                             case "Cancelled":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order has been cancelled</button>
+                                $('.statebtn').replaceWith(`
+                                    <button disabled id="completebtn" class="statebtn px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order has been cancelled</button>
                                 `)
                                 break;
                         }
                     } else if (userRole === "seller"){
                         switch (response.status) {
                             case "Open":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Waiting for payment</button>
+                                $('#openbtn').replaceWith(`
+                                    <button disabled id="confirmbtn" class="statebtn px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Waiting for payment</button>
                                 `)
                                 break;
                             case "Confirmed":
-                                $('#statebtn').replaceWith(`
-                                    <button onclick="() => {loading(); ship()}" id="statebtn" class="px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Ship Order</button>
+                                $('#confirmbtn').replaceWith(`
+                                    <button id="shipbtn" class="statebtn px-6 py-2 my-2 text-center bg-purple-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center" type="submit">Ship Order</button>
                                 `)
                                 break;
                             case "Ship":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order has been shipped</button>
+                                $('#shipbtn').replaceWith(`
+                                    <button disabled id="deliverbtn" class="statebtn px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order has been shipped</button>
                                 `)
                                 break;
                             case "Delivered":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order Complete</button>
+                                $('#deliverbtn').replaceWith(`
+                                    <button disabled id="completebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order Complete</button>
                                 `)
                                 break;
                             case "Cancelled":
-                                $('#statebtn').replaceWith(`
-                                    <button disabled id="statebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order has been cancelled</button>
+                                $('#confirmbtn').replaceWith(`
+                                    <button disabled id="completebtn" class="px-6 py-2 my-2 text-center bg-gray-500 rounded-xl text-white hover:no-underline hover:shadow-lg w-full sm:w-auto md:w-auto text-center cursor-default" type="submit">Order has been cancelled</button>
                                 `)
                                 break;
                         }
                     }
+
+                    $('#confirmbtn').on('click', function(){
+                        if (userRole === 'buyer'){
+                            loading()
+                            confirmOrder($('#orderid').val())
+                            .then((response) => { 
+                                console.log("di html:", response.status)
+                                if (response.status !== 200) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Pembayaran berhasil',
+                                    text: 'Proses pembayaran berhasil',
+                                    showConfirmButton: false
+                                })
+                                setInterval(function () { location.href = 'orderdetail.html' }, 1000)
+                            })
+                            .catch(reason =>{
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi kesalahan',
+                                    text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
+                                })
+                            })
+                        }
+                    })
+                    
+                    $('#cancelbtn').on('click', function(){
+                        if (userRole === 'buyer'){
+                            loading()
+                            cancelOrder($('#orderid').val())
+                            .then((response) => { 
+                                console.log("di html:", response.status)
+                                if (response.status !== 200) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Cancel berhasil',
+                                    text: 'Order telah berhasil dicancel',
+                                    showConfirmButton: false
+                                })
+                                setInterval(function () { location.href = 'orderdetail.html' }, 1000)
+                            })
+                            .catch(reason =>{
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi kesalahan',
+                                    text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
+                                })
+                            })
+                        }
+                    })
+                    
+                    
+                    $('#shipbtn').on('click', function(){
+                        if (userRole === 'seller'){
+                            loading()
+                            shipOrder($('#orderid').val())
+                            .then((response) => { 
+                                console.log("di html:", response.status)
+                                if (response.status !== 200) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Ship berhasil',
+                                    text: 'Order telah berhasil diship',
+                                    showConfirmButton: false
+                                })
+                                setInterval(function () { location.href = 'orderdetail.html' }, 1000)
+                            })
+                            .catch(reason =>{
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi kesalahan',
+                                    text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
+                                })
+                            })
+                        }
+                    })
+                    
+                    $('#deliverbtn').on('click', function(){
+                        if (userRole === 'buyer'){
+                            loading()
+                            deliverOrder($('#orderid').val())
+                            .then((response) => { 
+                                console.log("di html:", response.status)
+                                if (response.status !== 200) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Delivered',
+                                    text: 'Order telah diterima oleh pembeli',
+                                    showConfirmButton: false
+                                })
+                                setInterval(function () { location.href = 'orderdetail.html' }, 1000)
+                            })
+                            .catch(reason =>{
+                                Swal.close()
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi kesalahan',
+                                    text: 'silahkan cek koneksi internet anda atau coba lagi nanti'
+                                })
+                            })
+                        }
+                    })
+                        
                 }).catch((reason) => alert(reason))
 
                 

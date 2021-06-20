@@ -146,8 +146,7 @@ function confirmOrder(order_id){
         fetch(authBaseUrl + "order/" + order_id + "/confirm", {
             "method": "PUT",
             "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + getToken()
+                "Content-Type": "application/json"
             }
         })
             .then(response => {
@@ -173,8 +172,7 @@ function cancelOrder(order_id){
         fetch(authBaseUrl + "order/" + order_id + "/cancel", {
             "method": "PUT",
             "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + getToken()
+                "Content-Type": "application/json"
             }
         })
             .then(response => {
@@ -200,8 +198,7 @@ function shipOrder(order_id){
         fetch(authBaseUrl + "order/" + order_id + "/ship", {
             "method": "PUT",
             "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + getToken()
+                "Content-Type": "application/json"
             }
         })
             .then(response => {
@@ -227,8 +224,7 @@ function deliverOrder(order_id){
         fetch(authBaseUrl + "order/" + order_id + "/deliver", {
             "method": "PUT",
             "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + getToken()
+                "Content-Type": "application/json"
             }
         })
             .then(response => {
