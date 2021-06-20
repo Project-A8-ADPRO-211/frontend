@@ -224,7 +224,8 @@ function deliverOrder(order_id){
         fetch(authBaseUrl + "order/" + order_id + "/deliver", {
             "method": "PUT",
             "headers": {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + getToken()
             }
         })
             .then(response => {
